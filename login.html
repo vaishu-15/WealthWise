@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Poppins:wght@100;200;300;400&family=Raleway:wght@200;300;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="login.css" />
+    <title>contact-form</title>
+  </head>
+  <body>
+   
+
+   <!--contact part-->
+    <div class="section">
+      <div class="background" style="height: auto">
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="container pt-4">
+          <img class="logo" src="wealthwise_logo.png" width="90px" />
+          <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+              <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                <h6 class="logged mb-0 pb-3 pt-0">
+                  <span>Log In </span><span>Sign Up</span>
+                </h6>
+                <input
+                  class="checkbox"
+                  type="checkbox"
+                  id="reg-log"
+                  name="reg-log"
+                />
+                <label for="reg-log"></label>
+                <div class="card-3d-wrap mx-auto">
+                  <div class="card-3d-wrapper">
+                    <div class="card-front">
+                      <div class="center-wrap">
+                        <div class="section text-center">
+                          <h4 class="inside mb-4 pb-3">Log In</h4>
+                          <form id="loginForm" class="form-section">
+                            <div class="form-group">
+                              <input
+                                type="email"
+                                name="logemail"
+                                class="form-style"
+                                placeholder="Your Email*"
+                                id="logemail"
+                                autocomplete="off"
+                              />
+                              <i class="input-icon fa fa-envelope-o"></i>
+                            </div>
+                            <div class="form-group mt-2">
+                              <input
+                                type="password"
+                                name="logpass"
+                                class="form-style"
+                                placeholder="Your Password*"
+                                id="logpass"
+                                autocomplete="off"
+                              />
+                              <i class="input-icon fa fa-lock"></i>
+                            </div>
+
+                            <button
+                              type="submit"
+                              class="btn mt-4"
+                              id="submitButton"
+                            >
+                              <a href="#" class="link">Submit</a>
+                            </button>
+
+                            <p class="mb-0 mt-4 text-center">
+                              <a href="#0" class="link-one"
+                                >Forgot your password?</a
+                              >
+                            </p>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="card-back">
+                      <div class="center-wrap">
+                        <div class="section text-center">
+                          <div class="card-3d-wrap signup">
+                            <div class="card-3d-wrapper signup">
+                              <h4 class="inside mb-4 pb-3">Sign Up</h4>
+                              <form id="signupForm" class="form-section">
+                                <div class="form-group">
+                                  <input
+                                    type="text"
+                                    name="signupname"
+                                    class="form-style"
+                                    placeholder="Your Full Name*"
+                                    id="signupname"
+                                    autocomplete="off"
+                                  />
+                                  <i class="input-icon fa fa-user-circle"></i>
+                                </div>
+                                <div class="form-group mt-2">
+                                  <input
+                                    type="email"
+                                    name="signupemail"
+                                    class="form-style"
+                                    placeholder="Your Email*"
+                                    id="signupemail"
+                                    autocomplete="off"
+                                  />
+                                  <i class="input-icon fa fa-envelope-o"></i>
+                                </div>
+                                <div class="form-group mt-2">
+                                  <input
+                                    type="password"
+                                    name="signuppass"
+                                    class="form-style"
+                                    placeholder="Your Password*"
+                                    id="signuppass"
+                                    autocomplete="off"
+                                  />
+                                  <i class="input-icon fa fa-lock"></i>
+                                </div>
+                                <div class="form-group mt-2">
+                                  <input
+                                    type="phone"
+                                    name="signupphone"
+                                    class="form-style"
+                                    placeholder="Phone No.*"
+                                    id="signupphone"
+                                    autocomplete="off"
+                                  />
+                                  <i class="input-icon fa fa-phone"></i>
+                                </div>
+                                <button type="submit" class="btn mt-4">
+                                  <!-- <a href="budget.html" class="link">Submit</a> -->
+                                  Submit
+                                </button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+    } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBJXG2YESVybttVqp_M0slrjP0PTngerXk",
+      authDomain: "wealthwave-a1e74.firebaseapp.com",
+      projectId: "wealthwave-a1e74",
+      storageBucket: "wealthwave-a1e74.appspot.com",
+      messagingSenderId: "699246919866",
+      appId: "1:699246919866:web:812a32ef01d8b9698a8283",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    async function initApp() {
+      // Add this script after initializing Firebase
+      const signupForm = document.getElementById("signupForm");
+
+      signupForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const email = document.getElementById("signupemail").value;
+        const password = document.getElementById("signuppass").value;
+
+        try {
+          const auth = getAuth();
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          console.log(userCredential.user.uid);
+          alert("sign up successfull!");
+        } catch (error) {
+          console.error(error);
+          alert("Error sign up. Check the console for details.");
+        }
+      });
+
+      const loginForm = document.getElementById("loginForm");
+
+   
+      loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (submitButton.disabled) {
+          return; // Prevent multiple login attempts while the button is disabled
+        }
+
+        submitButton.disabled = true; // Disable the button during login process
+
+        const email = document.getElementById("logemail").value;
+        const password = document.getElementById("logpass").value;
+        try {
+          const auth = getAuth();
+          const userCredential = await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+          console.log(userCredential.user.uid);
+          alert("login successfull!");
+          window.location.href = "budget.html";
+        } catch (error) {
+          console.error(error);
+          alert("Error login. Check the console for details.");
+        } finally {
+          submitButton.disabled = false; // Re-enable the button after login attempt
+        }
+      });
+    }
+
+    window.onload = function () {
+      initApp();
+    };
+  </script>
+</html>
