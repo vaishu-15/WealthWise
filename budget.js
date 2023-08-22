@@ -1,12 +1,33 @@
+// Get references to HTML elements
 const toggleThemeButton = document.getElementById("toggle-theme");
 const body = document.body;
+const balance = document.getElementById("balance");
+const money_plus = document.getElementById("money-plus");
+const money_minus = document.getElementById("money-minus");
+const list = document.getElementById("list");
+const form = document.getElementById("form");
+const text = document.getElementById("text");
+const amount = document.getElementById("amount");
+const expenseType = document.getElementById("expense-type");
+const clearTransactionsButton = document.getElementById("clear-transactions");
 
+// Load transactions from local storage if available
+const localStorageTransactions = JSON.parse(
+  localStorage.getItem("transactions")
+);
+let transactions =
+  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
+
+// Theme Toggle Functionality
 toggleThemeButton.addEventListener("click", () => {
+  // Toggle dark and light theme classes on the body
   body.classList.toggle("dark-theme");
   body.classList.toggle("light-theme");
 
+  // Calculate label color based on selected theme
   const labelColor = body.classList.contains("dark-theme") ? "white" : "black";
 
+  // Update color-related settings for the expenseChart and barChart
   expenseChart.options.plugins.legend.labels.color = labelColor;
   expenseChart.options.plugins.tooltip.callbacks.label = function (context) {
     return context.label + ": " + context.formattedValue;
@@ -17,34 +38,22 @@ toggleThemeButton.addEventListener("click", () => {
     return context.label + ": " + context.formattedValue;
   };
 
+  // Update chart color and tick color settings
   barChart.options.scales.x.ticks.color = labelColor;
   barChart.options.scales.y.ticks.color = labelColor;
 
+  // Update the charts with new settings
   expenseChart.update();
   barChart.update();
 });
 
-const balance = document.getElementById("balance");
-const money_plus = document.getElementById("money-plus");
-const money_minus = document.getElementById("money-minus");
-const list = document.getElementById("list");
-const form = document.getElementById("form");
-const text = document.getElementById("text");
-const amount = document.getElementById("amount");
-const expenseType = document.getElementById("expense-type");
-
-const localStorageTransactions = JSON.parse(
-  localStorage.getItem("transactions")
-);
-
-let transactions =
-  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
-
+// Function to add a new transaction
 function addTransaction(e) {
   e.preventDefault();
 
   const transactionType = document.getElementById("transaction-type").value;
 
+  // Validate input fields
   if (
     expenseType.value.trim() === "" ||
     text.value.trim() === "" ||
@@ -62,11 +71,17 @@ function addTransaction(e) {
           : +Math.abs(amount.value),
     };
 
+    // Add transaction to the array
     transactions.push(transaction);
 
+    // Update the DOM with the new transaction
     addTransactionDOM(transaction);
+
+    // Update summary values and local storage
     updateValues();
     updateLocalStorage();
+
+    // Clear input fields
     expenseType.value = "";
     text.value = "";
     amount.value = "";
@@ -77,30 +92,33 @@ function generateID() {
   return Math.floor(Math.random() * 1000000000);
 }
 
+// Function to add a transaction to the DOM
 function addTransactionDOM(transaction) {
   const sign = transaction.amount < 0 ? "-" : "+";
   const item = document.createElement("li");
 
   item.classList.add(transaction.amount < 0 ? "minus" : "plus");
 
+  // Populate the list item with transaction details
   item.innerHTML = `
   ${transaction.expense} ${transaction.text} 
   <span>${sign}${Math.abs(transaction.amount)}</span>
 `;
 
+  // Append the item to the transaction list
   list.appendChild(item);
 }
 
-const clearTransactionsButton = document.getElementById("clear-transactions");
-
 clearTransactionsButton.addEventListener("click", clearAllTransactions);
 
+// Function to clear all transactions
 function clearAllTransactions() {
   transactions = [];
   updateLocalStorage();
   Init();
 }
 
+// Function to update the displayed values (balance, income, expense)
 function updateValues() {
   const amounts = transactions.map((transaction) => transaction.amount);
   const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
@@ -113,10 +131,12 @@ function updateValues() {
     -1
   ).toFixed(2);
 
+  // Update balance, income, and expense values in the UI
   balance.innerText = `₹${total}`;
   money_plus.innerText = `₹${income}`;
   money_minus.innerText = `₹${expense}`;
 
+  // Update card background color when it total goes into negative
   if (total < 0) {
     document.getElementById("card-1").style.backgroundColor = "#d0342c ";
   } else {
@@ -124,12 +144,14 @@ function updateValues() {
   }
 }
 
+// Function to remove a transaction by ID
 function removeTransaction(id) {
   transactions = transactions.filter((transaction) => transaction.id !== id);
   updateLocalStorage();
   Init();
 }
 
+// Function to update local storage with the current transactions
 function updateLocalStorage() {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 }
@@ -143,6 +165,8 @@ function Init() {
 Init();
 
 form.addEventListener("submit", addTransaction);
+
+// Donut Chart
 
 const expenseLabels = transactions
   .filter((transaction) => transaction.amount < 0)
@@ -190,6 +214,7 @@ const expenseChart = new Chart(expenseChartCanvas, {
   },
 });
 
+// Calculate income by expense type
 const incomeByExpenseType = transactions.reduce((acc, transaction) => {
   if (transaction.amount > 0) {
     acc[transaction.expense] =
@@ -197,6 +222,8 @@ const incomeByExpenseType = transactions.reduce((acc, transaction) => {
   }
   return acc;
 }, {});
+
+// Bar Chart
 
 const barChartCanvas = document.getElementById("barChart");
 const barChart = new Chart(barChartCanvas, {
