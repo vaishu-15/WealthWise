@@ -1,0 +1,301 @@
+#toggle-theme {
+  background-color: var(--btn-color-bg);
+  color: var(--primary-text);
+  border-color: var(--primary-text);
+  background-color: #c4b2d4;
+}
+
+/* Light Theme Styles */
+.light-theme {
+  --primary-bg: #ffffff;
+  --primary-text: #333333;
+  --chart-bg: #ffffff;
+  --chart-font-color: #333333;
+  --btn-color-bg: #ceafce;
+  --card-color: white;
+}
+
+/* Dark Theme Styles */
+.dark-theme {
+  --primary-bg: black;
+  --primary-text: #ffffff;
+  --chart-bg: black;
+  --chart-font-color: black;
+  --btn-color-bg: #af69ee;
+  --card-color: black;
+}
+
+body {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+.theme-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0px;
+  margin-top: 1px;
+}
+.theme-toggle .logo-image {
+  justify-content: flex-start;
+}
+.theme-toggle .btn {
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0px;
+  margin-top: 1px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  margin-top: 15px;
+  text-align: left;
+}
+
+.logo-image {
+  width: 100px;
+  height: auto;
+}
+
+.chart-heading {
+  color: var(--chart-font-color);
+}
+
+#card-1 {
+  background-color: #3fa0ef;
+  color: aliceblue;
+}
+#card-1 .card-title {
+  font-size: 30px;
+  color: var(--primary-bg);
+}
+#card-1 .card-texts {
+  font-size: 20px;
+  color: var(--primary-bg);
+}
+
+#card-2 {
+  background-color: #e07e63;
+  color: aliceblue;
+}
+#card-2 .card-title {
+  font-size: 30px;
+  color: var(--primary-bg);
+}
+#card-2 .money-plus {
+  font-size: 20px;
+  color: var(--primary-bg);
+}
+
+#card-3 {
+  background-color: #bfca43;
+  color: aliceblue;
+}
+#card-3 .card-title {
+  font-size: 30px;
+  color: var(--primary-bg);
+}
+#card-3 .money-minus {
+  font-size: 20px;
+  color: var(--primary-bg);
+}
+
+#card-1:hover {
+  background-color: #7eb1e4;
+}
+
+#card-2:hover {
+  background-color: #df9f8e;
+}
+
+#card-3:hover {
+  background-color: #bec476;
+}
+
+.card {
+  border-radius: 12px;
+}
+.card .card-body {
+  border-radius: 12px;
+}
+
+#table {
+  background-color: #346ba1;
+  color: aliceblue;
+}
+#table .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: left;
+  flex-wrap: wrap;
+}
+#table .card-body .card-top-title {
+  font-size: 35px;
+  justify-content: flex-start;
+  flex-grow: 1;
+  margin-right: 15px;
+}
+#table .card-body .clear-btn {
+  background-color: cadetblue;
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+#table .card-body .clear-btn:hover {
+  background-color: rgb(121, 182, 139);
+}
+#table .card-body .list {
+  list-style: none;
+  padding: 20px;
+  flex-basis: 100%;
+}
+#table .card-body .list .lists {
+  font-size: 16px;
+  margin: 12px 0;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+#table .card-body .list .transaction {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+#table .card-body .list .transaction .transaction-text {
+  flex-grow: 1;
+  text-align: left;
+}
+#table .card-body .list .transaction .transaction-amount {
+  color: inherit;
+  text-align: right;
+}
+#table .card-body .list .plus span {
+  color: rgb(52, 187, 52);
+  font-weight: 600;
+  width: 100%;
+  justify-content: flex-end;
+}
+#table .card-body .list .minus span {
+  color: #db5454;
+  font-weight: 600;
+  width: 100%;
+}
+
+#tada {
+  background-color: #346ba1;
+  color: aliceblue;
+}
+#tada #form {
+  background-color: #346ba1;
+}
+#tada #form .form-control {
+  color: black;
+  font-weight: 600;
+}
+#tada #form .form-control #text {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: none;
+  width: 100%;
+}
+#tada #form .form-control #amount {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: none;
+  width: 100%;
+}
+#tada #form .btn {
+  background-color: cadetblue;
+  color: aliceblue;
+  font-size: 20px;
+}
+
+#tada .form-cont {
+  width: 100%;
+  border: #0a0a0a;
+  border-radius: 2px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+select {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.chart-heading {
+  font-family: "Rubik", sans-serif;
+  color: #023047;
+  text-transform: uppercase;
+  font-size: 24px;
+  text-align: center;
+}
+
+.chart-container {
+  width: 200px;
+  height: 250px;
+  background-color: var(--chart-bg);
+  color: var(--primary-text);
+}
+
+.programming-stats {
+  background-color: var(--chart-bg);
+  color: var(--primary-text);
+  font-family: "Rubik", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 0 auto;
+  width: -moz-fit-content;
+  width: fit-content;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  padding: 8px 32px;
+  color: #023047;
+  transition: all 400ms ease;
+  overflow: auto;
+}
+.programming-stats:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 16px -7px rgba(0, 0, 0, 0.3);
+}
+
+.card {
+  border: none;
+}
+
+.chart {
+  position: relative;
+  height: 265px;
+  background-color: var(--chart-bg);
+  color: var(--primary-text);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.3);
+  transition: all 400ms ease;
+  overflow: auto;
+}
+.chart:hover {
+  transform: scale(1.01);
+  box-shadow: 0 4px 16px -7px rgba(0, 0, 0, 0.3);
+}
+
+#barChart {
+  width: 100%;
+  height: 100%;
+}
+
+h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #333;
+}/*# sourceMappingURL=budget.css.map */
