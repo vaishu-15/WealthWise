@@ -71,16 +71,6 @@ function addTransaction(e) {
           : +Math.abs(amount.value),
     };
 
-    // Check if the expense type already exists in the expensesByExpenseType object
-    if (transactionType === "expense") {
-      if (expensesByExpenseType.hasOwnProperty(transaction.expense)) {
-        expensesByExpenseType[transaction.expense] += transaction.amount;
-      } else {
-        expensesByExpenseType[transaction.expense] = transaction.amount;
-      }
-      updateDonutChart(); // Update the donut chart dataset for expenses
-    }
-
     // Add transaction to the array
     transactions.push(transaction);
 
@@ -96,14 +86,6 @@ function addTransaction(e) {
     text.value = "";
     amount.value = "";
   }
-}
-
-// Function to update the donut chart dataset for expenses
-function updateDonutChart() {
-  const updatedExpenseData = Object.values(expensesByExpenseType);
-
-  expenseChart.data.datasets[0].data = updatedExpenseData;
-  expenseChart.update();
 }
 
 function generateID() {
