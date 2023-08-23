@@ -10,7 +10,9 @@ const text = document.getElementById("text");
 const amount = document.getElementById("amount");
 const expenseType = document.getElementById("expense-type");
 const clearTransactionsButton = document.getElementById("clear-transactions");
+
 let dark = false;
+
 // Load transactions from local storage if available
 const localStorageTransactions = JSON.parse(
   localStorage.getItem("transactions")
@@ -21,6 +23,7 @@ let transactions =
 // Theme Toggle Functionality
 toggleThemeButton.addEventListener("click", () => {
   dark = JSON.parse(localStorage.getItem("dark-theme"));
+
   // Toggle dark and light theme classes on the body
   body.classList.toggle("dark-theme");
   body.classList.toggle("light-theme");
@@ -45,9 +48,6 @@ toggleThemeButton.addEventListener("click", () => {
   barChart.options.scales.x.ticks.color = labelColor;
   barChart.options.scales.y.ticks.color = labelColor;
 
-  // Update the charts with new settings
-  // expenseChart.update();
-  // barChart.update();
 });
 
 // Function to add a new transaction
@@ -187,6 +187,7 @@ form.addEventListener("submit", addTransaction);
 
 // Donut Chart
 let aggregatedExpenseData = {};
+
 // Calculate aggregated amounts for each expense type
 function updateDoughnutChartData() {
   aggregatedExpenseData = transactions
