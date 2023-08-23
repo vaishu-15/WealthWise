@@ -194,7 +194,6 @@ body {
   color: rgb(52, 187, 52);
   font-weight: 600;
   width: 100%;
-  justify-content: flex-end;
 }
 #table .card-body .list .minus .text_color {
   color: #db5454;
@@ -339,15 +338,6 @@ h2 {
   width: 100px;
   height: 100px;
   position: relative;
-}
-
-body, html {
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 svg {

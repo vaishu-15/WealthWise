@@ -11,7 +11,6 @@ a:hover {
    color: #919aee;
   text-decoration: none;
 }
-
 .link {
   color: #3845b4;
   text-decoration: none;
@@ -20,8 +19,7 @@ a:hover {
     color: #bba96e;
 }
 .inside{
-    color:#a2a9e9;
-    
+    color:#a2a9e9;  
 }
 p {
   font-weight: 500;
@@ -36,7 +34,6 @@ h6 span{
   text-transform: uppercase;
   font-weight: 700;
 }
-
 .section{
   position: relative;
   width: 100%;
@@ -85,8 +82,6 @@ h6 span{
 .checkbox:checked + label:before {
   transform: translateX(44px) rotate(-270deg);
 }
-
-
 .card-3d-wrap {
   position: relative;
   width: 440px;
@@ -97,7 +92,6 @@ h6 span{
   perspective: 800px;
   margin-top: 60px;
 }
-
 .card-3d-wrapper {
   width: 100%;
   height: 100%;
@@ -128,13 +122,9 @@ h6 span{
   -o-backface-visibility: hidden;
   backface-visibility: hidden;
 }
-
-
 .card-back {
   transform: rotateY(180deg);
- 
 }
-
 .checkbox:checked ~ .card-3d-wrap .card-3d-wrapper {
   transform: rotateY(180deg);
 }
@@ -142,33 +132,23 @@ h6 span{
    position: absolute;
   width: 100%;
   padding: 0 35px;
- 
   top: 9%;
-  left: 0;
-  
+  left: 0; 
   transform: translate3d(0, 35px) perspective(100px);
   z-index: 20;
   display: block;
 }
-.center-wrap{
-  
+.center-wrap{  
   position: absolute;
   width: 100%;
   padding: 0 35px;
-  /* top: 50%; */
   top: 5%;
   left: 0;
- 
-   transform: translate3d(0, 35px) perspective(100px);
+  transform: translate3d(0, 35px) perspective(100px);
   z-index: 20;
   display: block;
 }
-
-
-
-
 .card-3d-wrap.signup {
-  
   position: relative;
   width: 440px;
   max-width: 100%;
@@ -193,19 +173,15 @@ h6 span{
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
 }
-
 .card-front.signup,
 .card-back.signup {
   transform: rotateY(0deg);
   background-size: cover;
 }
-
-
 .card-front.signup, .card-back.signup {
   box-shadow: 0 4px 8px 0 rgba(20, 20, 20, 0.74);
   width: 100%;
   height: 100%;
-  
   background-color: #2a2b38;
   background-image: url('contact-background.avif');
   background-position: bottom center;
@@ -223,20 +199,12 @@ h6 span{
   backface-visibility: hidden;
 }
 .card-back.signup {
-  
-    /* Apply a solid background color */
   transform: rotateY(180deg);
 }
 .checkbox:checked ~ .card-3d-wrap.signup .card-3d-wrapper.signup {
   transform: rotateY(180deg);
  
 }
-
-
-/* ....... */
-
-
-
 .form-group{ 
   position: relative;
   display: block;
@@ -279,7 +247,6 @@ h6 span{
   -webkit-transition: all 200ms linear;
     transition: all 200ms linear;
 }
-
 .form-group input:-ms-input-placeholder  {
   color: #c4c3ca;
   opacity: 0.7;
@@ -325,7 +292,6 @@ h6 span{
     transition: all 200ms linear;
     
 }
-
 .btn{  
   border-radius: 4px;
   height: 44px;
@@ -365,10 +331,6 @@ h6 span{
   color: #ffeba7;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }
-
-
-
-
 .logo {
 	position: absolute;
 	top: 20px;
@@ -453,5 +415,67 @@ h6 span{
   to {
     transform: scale(20) rotate(960deg) translate(-50%, -50%);
     opacity: 0;
+  }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.loading {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+svg {
+  width: 300px;
+}
+
+svg path {
+  --total-length: 136px; 
+  stroke-linecap: round;
+  stroke-width: 8;
+  stroke: rgb(168, 235, 168);
+  fill: none;
+  stroke-dasharray: var(--total-length) var(--total-length);
+  /* animation: animate 5s cubic-bezier(0, 0.3, 0.7, 1) infinite; */
+  animation: animate 2s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+   
+    stroke-dashoffset: calc(-1 * var(--total-length));
+  }
+  30%,
+  50% {
+  
+    stroke-dashoffset: 0;
+  }
+  80%,
+  100% {
+    
+    stroke-dashoffset: var(--total-length);
   }
 }
