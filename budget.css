@@ -154,6 +154,13 @@ body {
   list-style: none;
   padding: 20px;
   flex-basis: 100%;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 15px;
+}
+#table .card-body .list::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
 }
 #table .card-body .list .lists {
   font-size: 16px;
