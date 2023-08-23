@@ -71,11 +71,11 @@ function addTransaction(e) {
           : +Math.abs(amount.value),
     };
 
-    // Check if the expense type already exists in the expensesByExpenseType object
-    if (transactionType === "expense") {
-      expensesByExpenseType[transaction.expense] =
-        (expensesByExpenseType[transaction.expense] || 0) + transaction.amount;
-    }
+    // // Check if the expense type already exists in the expensesByExpenseType object
+    // if (transactionType === "expense") {
+    //   expensesByExpenseType[transaction.expense] =
+    //     (expensesByExpenseType[transaction.expense] || 0) + transaction.amount;
+    // }
 
     // Add transaction to the array
     transactions.push(transaction);
