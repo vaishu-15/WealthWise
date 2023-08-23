@@ -180,6 +180,9 @@ body {
   text-align: right;
   padding: 20px;
 }
+#table .card-body .list .uppercase {
+  text-transform: uppercase;
+}
 #table .card-body .list .plus .text_color {
   color: rgb(52, 187, 52);
   font-weight: 600;
@@ -299,8 +302,4 @@ h2 {
   margin-top: 0;
   font-size: 1.5rem;
   color: #333;
-}
-
-.uppercase {
-  text-transform: uppercase;
 }/*# sourceMappingURL=budget.css.map */
