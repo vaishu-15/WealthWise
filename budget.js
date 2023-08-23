@@ -170,22 +170,27 @@ form.addEventListener("submit", addTransaction);
 
 // Donut Chart
 
-const expenseLabels = transactions
+// Calculate aggregated amounts for each expense type
+const aggregatedExpenseData = transactions
   .filter((transaction) => transaction.amount < 0)
-  .map((transaction) => transaction.expense);
-
-const expenseAmounts = transactions
-  .filter((transaction) => transaction.amount < 0)
-  .map((transaction) => Math.abs(transaction.amount));
+  .reduce((aggregatedData, transaction) => {
+    const expenseType = transaction.expense;
+    if (aggregatedData[expenseType]) {
+      aggregatedData[expenseType] -= transaction.amount;
+    } else {
+      aggregatedData[expenseType] = -transaction.amount;
+    }
+    return aggregatedData;
+  }, {});
 
 const expenseChartCanvas = document.getElementById("expense-chart");
 const expenseChart = new Chart(expenseChartCanvas, {
   type: "doughnut",
   data: {
-    labels: expenseLabels,
+    labels: Object.keys(aggregatedExpenseData), // Use the expense types as labels
     datasets: [
       {
-        data: expenseAmounts,
+        data: Object.values(aggregatedExpenseData), // Use the aggregated amounts as data
         backgroundColor: [
           "#e07e63",
           "#bfca43",
@@ -215,6 +220,7 @@ const expenseChart = new Chart(expenseChartCanvas, {
     },
   },
 });
+
 
 // Calculate income by expense type
 const incomeByExpenseType = transactions.reduce((acc, transaction) => {
@@ -257,3 +263,19 @@ const barChart = new Chart(barChartCanvas, {
     },
   },
 });
+
+const loaderContainer = document.querySelector(".loader-container");
+
+function showLoader() {
+  loaderContainer.classList.add("loading");
+}
+
+function hideLoader() {
+  loaderContainer.classList.remove("loading");
+}
+
+// Simulate loader for 4 seconds
+showLoader();
+setTimeout(() => {
+  hideLoader();
+}, 3000);
