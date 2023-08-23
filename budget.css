@@ -178,14 +178,15 @@ body {
 #table .card-body .list .transaction .transaction-amount {
   color: inherit;
   text-align: right;
+  padding: 20px;
 }
-#table .card-body .list .plus span {
+#table .card-body .list .plus .text_color {
   color: rgb(52, 187, 52);
   font-weight: 600;
   width: 100%;
   justify-content: flex-end;
 }
-#table .card-body .list .minus span {
+#table .card-body .list .minus .text_color {
   color: #db5454;
   font-weight: 600;
   width: 100%;
@@ -298,4 +299,8 @@ h2 {
   margin-top: 0;
   font-size: 1.5rem;
   color: #333;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }/*# sourceMappingURL=budget.css.map */

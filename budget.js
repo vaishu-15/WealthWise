@@ -71,6 +71,12 @@ function addTransaction(e) {
           : +Math.abs(amount.value),
     };
 
+    // Check if the expense type already exists in the expensesByExpenseType object
+    if (transactionType === "expense") {
+      expensesByExpenseType[transaction.expense] =
+        (expensesByExpenseType[transaction.expense] || 0) + transaction.amount;
+    }
+
     // Add transaction to the array
     transactions.push(transaction);
 
@@ -101,8 +107,12 @@ function addTransactionDOM(transaction) {
 
   // Populate the list item with transaction details
   item.innerHTML = `
-  ${transaction.expense} ${transaction.text} 
-  <span>${sign}${Math.abs(transaction.amount)}</span>
+  <span class="uppercase"><strong>${
+    transaction.expense
+  } :</strong></span> &nbsp ${transaction.text} &nbsp 
+  <span class="text_color">${sign}${Math.abs(
+    transaction.amount
+  )}</span>
 `;
 
   // Append the item to the transaction list
