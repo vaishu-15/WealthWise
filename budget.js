@@ -10,7 +10,7 @@ const text = document.getElementById("text");
 const amount = document.getElementById("amount");
 const expenseType = document.getElementById("expense-type");
 const clearTransactionsButton = document.getElementById("clear-transactions");
-
+let dark = false;
 // Load transactions from local storage if available
 const localStorageTransactions = JSON.parse(
   localStorage.getItem("transactions")
@@ -20,9 +20,12 @@ let transactions =
 
 // Theme Toggle Functionality
 toggleThemeButton.addEventListener("click", () => {
+  dark = JSON.parse(localStorage.getItem("dark-theme"));
   // Toggle dark and light theme classes on the body
   body.classList.toggle("dark-theme");
   body.classList.toggle("light-theme");
+  dark = dark ? false : true;
+  localStorage.setItem("dark-theme", dark);
 
   // Calculate label color based on selected theme
   const labelColor = body.classList.contains("dark-theme") ? "white" : "black";
@@ -43,8 +46,8 @@ toggleThemeButton.addEventListener("click", () => {
   barChart.options.scales.y.ticks.color = labelColor;
 
   // Update the charts with new settings
-  expenseChart.update();
-  barChart.update();
+  // expenseChart.update();
+  // barChart.update();
 });
 
 // Function to add a new transaction
@@ -80,6 +83,7 @@ function addTransaction(e) {
     // Update summary values and local storage
     updateValues();
     updateLocalStorage();
+    updateCharts();
 
     // Clear input fields
     expenseType.value = "";
@@ -101,10 +105,15 @@ function addTransactionDOM(transaction) {
 
   // Populate the list item with transaction details
   item.innerHTML = `
-  <span class="uppercase"><strong>${
-    transaction.expense
-  } :</strong></span> &nbsp ${transaction.text} &nbsp 
+  <div class="lists">
+<div>
+  <span class="uppercase"><strong>${transaction.expense} :</strong></span> 
+  &nbsp ${transaction.text} &nbsp 
+  </div>
+  <div>
   <span class="text_color">${sign}${Math.abs(transaction.amount)}</span>
+  </div>
+  </div>
 `;
 
   // Append the item to the transaction list
@@ -117,6 +126,9 @@ clearTransactionsButton.addEventListener("click", clearAllTransactions);
 function clearAllTransactions() {
   transactions = [];
   updateLocalStorage();
+  console.log("object");
+  updateCharts();
+
   Init();
 }
 
@@ -137,6 +149,10 @@ function updateValues() {
   balance.innerText = `₹${total}`;
   money_plus.innerText = `₹${income}`;
   money_minus.innerText = `₹${expense}`;
+
+  if (JSON.parse(localStorage.getItem("dark-theme"))) {
+    body.classList.add("dark-theme");
+  }
 
   // Update card background color when it total goes into negative
   if (total < 0) {
@@ -162,6 +178,7 @@ function Init() {
   list.innerHTML = "";
   transactions.forEach(addTransactionDOM);
   updateValues();
+  dark = JSON.parse(localStorage.getItem("dark-theme"));
 }
 
 Init();
@@ -169,100 +186,120 @@ Init();
 form.addEventListener("submit", addTransaction);
 
 // Donut Chart
-
+let aggregatedExpenseData = {};
 // Calculate aggregated amounts for each expense type
-const aggregatedExpenseData = transactions
-  .filter((transaction) => transaction.amount < 0)
-  .reduce((aggregatedData, transaction) => {
-    const expenseType = transaction.expense;
-    if (aggregatedData[expenseType]) {
-      aggregatedData[expenseType] -= transaction.amount;
-    } else {
-      aggregatedData[expenseType] = -transaction.amount;
-    }
-    return aggregatedData;
-  }, {});
+function updateDoughnutChartData() {
+  aggregatedExpenseData = transactions
+    .filter((transaction) => transaction.amount < 0)
+    .reduce((aggregatedData, transaction) => {
+      const expenseType = transaction.expense;
+      if (aggregatedData[expenseType]) {
+        aggregatedData[expenseType] -= transaction.amount;
+      } else {
+        aggregatedData[expenseType] = -transaction.amount;
+      }
+      return aggregatedData;
+    }, {});
+}
 
 const expenseChartCanvas = document.getElementById("expense-chart");
-const expenseChart = new Chart(expenseChartCanvas, {
-  type: "doughnut",
-  data: {
-    labels: Object.keys(aggregatedExpenseData), // Use the expense types as labels
-    datasets: [
-      {
-        data: Object.values(aggregatedExpenseData), // Use the aggregated amounts as data
-        backgroundColor: [
-          "#e07e63",
-          "#bfca43",
-          "#df9f8e",
-          "#7eb1e4",
-          "#bec476",
-        ],
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        labels: {
-          color: body.classList.contains("dark-theme") ? "white" : "black",
+let expenseChart;
+function updateDoughnutChart() {
+  updateDoughnutChartData();
+  expenseChart = new Chart(expenseChartCanvas, {
+    type: "doughnut",
+    data: {
+      labels: Object.keys(aggregatedExpenseData), // Use the expense types as labels
+      datasets: [
+        {
+          data: Object.values(aggregatedExpenseData), // Use the aggregated amounts as data
+          backgroundColor: [
+            "#e07e63",
+            "#bfca43",
+            "#df9f8e",
+            "#7eb1e4",
+            "#bec476",
+          ],
         },
-      },
-      tooltip: {
-        callbacks: {
-          label: function (context) {
-            return context.label + ": " + context.formattedValue;
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            color: body.classList.contains("dark-theme") ? "white" : "black",
+          },
+        },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return context.label + ": " + context.formattedValue;
+            },
           },
         },
       },
     },
-  },
-});
-
-
+  });
+}
+updateDoughnutChart();
 // Calculate income by expense type
-const incomeByExpenseType = transactions.reduce((acc, transaction) => {
-  if (transaction.amount > 0) {
-    acc[transaction.expense] =
-      (acc[transaction.expense] || 0) + transaction.amount;
-  }
-  return acc;
-}, {});
+let incomeByExpenseType = {};
+function updateBarChartData() {
+  incomeByExpenseType = transactions.reduce((acc, transaction) => {
+    if (transaction.amount > 0) {
+      acc[transaction.expense] =
+        (acc[transaction.expense] || 0) + transaction.amount;
+    }
+    return acc;
+  }, {});
+}
 
 // Bar Chart
 
 const barChartCanvas = document.getElementById("barChart");
-const barChart = new Chart(barChartCanvas, {
-  type: "bar",
-  data: {
-    labels: Object.keys(incomeByExpenseType),
-    datasets: [
-      {
-        label: "Income by Expense Type",
-        data: Object.values(incomeByExpenseType),
-        backgroundColor: [
-          "#e07e63",
-          "#bfca43",
-          "#df9f8e",
-          "#7eb1e4",
-          "#bec476",
-        ],
-      },
-    ],
-  },
-  options: {
-    border: 0,
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        beginAtZero: true,
+let barChart;
+function loadBarChart() {
+  updateBarChartData();
+  barChart = new Chart(barChartCanvas, {
+    type: "bar",
+    data: {
+      labels: Object.keys(incomeByExpenseType),
+      datasets: [
+        {
+          label: "Income by Expense Type",
+          data: Object.values(incomeByExpenseType),
+          backgroundColor: [
+            "#e07e63",
+            "#bfca43",
+            "#df9f8e",
+            "#7eb1e4",
+            "#bec476",
+          ],
+        },
+      ],
+    },
+    options: {
+      border: 0,
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
       },
     },
-  },
-});
+  });
+}
+loadBarChart();
+
+function updateCharts() {
+  barChart.destroy();
+  loadBarChart();
+  expenseChart.destroy();
+  updateDoughnutChart();
+}
 
 const loaderContainer = document.querySelector(".loader-container");
 
@@ -274,8 +311,8 @@ function hideLoader() {
   loaderContainer.classList.remove("loading");
 }
 
-// Simulate loader for 4 seconds
+// Simulate loader for 3 seconds
 showLoader();
 setTimeout(() => {
   hideLoader();
-}, 3000);
+}, 1500);

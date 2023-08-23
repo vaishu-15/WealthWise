@@ -184,13 +184,13 @@ body {
       list-style: none;
       padding: 20px;
       flex-basis: 100%;
-      max-height: 350px; 
-      overflow-y: auto; 
-      padding-right: 15px; 
+      max-height: 350px;
+      overflow-y: auto;
+      padding-right: 15px;
 
       &::-webkit-scrollbar {
-        width: 0; 
-        background: transparent; 
+        width: 0;
+        background: transparent;
       }
       .lists {
         font-size: 16px;
@@ -227,7 +227,6 @@ body {
         color: rgb(52, 187, 52);
         font-weight: 600;
         width: 100%;
-        justify-content: flex-end;
       }
 
       .minus .text_color {
@@ -384,21 +383,12 @@ h2 {
   position: relative;
 }
 
-body, html {
-  margin: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 svg {
   width: 300px;
 }
 
 svg path {
-  --total-length: 136px; // Retrieved using getTotalLength()
+  --total-length: 136px; 
   stroke-linecap: round;
   stroke-width: 8;
   stroke: rgb(168, 235, 168);
@@ -413,14 +403,14 @@ svg path {
     // Start from an empty path (with a negative offset)
     stroke-dashoffset: calc(-1 * var(--total-length));
   }
-  30%, 50% {
+  30%,
+  50% {
     // Fill the path towards the center, then pause for a bit
     stroke-dashoffset: 0;
   }
-  80%, 100% {
+  80%,
+  100% {
     // Remove the stroke, but now in the opposite direction
     stroke-dashoffset: var(--total-length);
   }
 }
-
-
