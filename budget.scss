@@ -169,7 +169,7 @@ body {
     .clear-btn {
       background-color: cadetblue;
       color: white;
-      font-size: 22px;
+      font-size: 17px;
       font-weight: 500;
       border: none;
       cursor: pointer;
@@ -224,15 +224,17 @@ body {
         text-transform: uppercase;
       }
       .plus .text_color {
-        color: rgb(52, 187, 52);
-        font-weight: 600;
+        color: rgb(172, 247, 172);
+        font-weight: 700;
         width: 100%;
+        font-size: 20px;
       }
 
       .minus .text_color {
-        color: #db5454;
-        font-weight: 600;
+        color: #ec8e8e;
+        font-weight: 700;
         width: 100%;
+         font-size: 20px;
       }
     }
   }
