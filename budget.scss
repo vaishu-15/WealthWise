@@ -14,7 +14,7 @@ $dark-card-color: black;
 
 $bar-color: #fff;
 $ball-color: #fff;
-$bg-color: #EA4961;
+$bg-color: #ea4961;
 
 #toggle-theme {
   background-color: var(--btn-color-bg);
@@ -212,9 +212,10 @@ body {
           text-align: right;
           padding: 20px;
         }
-        
       }
-      
+      .uppercase {
+        text-transform: uppercase;
+      }
       .plus .text_color {
         color: rgb(52, 187, 52);
         font-weight: 600;
@@ -345,6 +346,3 @@ h2 {
   font-size: 1.5rem;
   color: #333;
 }
-.uppercase{
-        text-transform: uppercase;
-      }
