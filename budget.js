@@ -1,5 +1,23 @@
+
+const fromDateInput = document.getElementById("from");
+const toDateInput = document.getElementById("to");
+
+flatpickr(fromDateInput, {
+  dateFormat: "Y-m-d",
+  onClose: function (selectedDates, dateStr, instance) {
+    toDateInput._flatpickr.set("minDate", dateStr);
+  },
+});
+
+flatpickr(toDateInput, {
+  dateFormat: "Y-m-d",
+  onClose: function (selectedDates, dateStr, instance) {
+    fromDateInput._flatpickr.set("maxDate", dateStr);
+  },
+});
+
 // Get references to HTML elements
-const toggleThemeButton = document.getElementById("toggle-theme");
+const toggleThemeButton = document.getElementById("theme-toggle");
 const body = document.body;
 const balance = document.getElementById("balance");
 const money_plus = document.getElementById("money-plus");
@@ -23,6 +41,8 @@ let transactions =
 // Theme Toggle Functionality
 toggleThemeButton.addEventListener("click", () => {
   dark = JSON.parse(localStorage.getItem("dark-theme"));
+
+  console.log(dark, "dark");
 
   // Toggle dark and light theme classes on the body
   body.classList.toggle("dark-theme");
