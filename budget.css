@@ -139,16 +139,18 @@ body {
   margin-right: 15px;
 }
 #table .card-body .clear-btn {
-  background-color: cadetblue;
+  background-color: rgb(121, 182, 139);
   color: white;
   font-size: 17px;
   font-weight: 500;
   border: none;
   cursor: pointer;
   border-radius: 2px;
+  padding: 5px 10px;
+  margin: 10px 2px;
 }
 #table .card-body .clear-btn:hover {
-  background-color: rgb(121, 182, 139);
+  background-color: cadetblue;
 }
 #table .card-body .list {
   list-style: none;
@@ -227,9 +229,12 @@ body {
   width: 100%;
 }
 #tada #form .btn {
-  background-color: cadetblue;
+  background-color: rgb(121, 182, 139);
   color: aliceblue;
   font-size: 20px;
+}
+#tada #form .btn:hover {
+  background-color: cadetblue;
 }
 
 #tada .form-cont {
