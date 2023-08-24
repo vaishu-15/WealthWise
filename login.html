@@ -38,7 +38,7 @@
       </div>
     </div>
 
-   <!--contact part-->
+    <!--contact part-->
     <div class="section">
       <div class="background" style="height: auto">
         <div class="cube"></div>
@@ -110,13 +110,13 @@
                     </div>
 
                     <div class="card-back">
-                      <div class="center-wrap ">
-                        <div class="section text-center" >
+                      <div class="center-wrap">
+                        <div class="section text-center">
                           <div class="card-3d-wrap signup">
                             <div class="card-3d-wrapper signup">
                               <h4 class="inside mb-4 pb-3">Sign Up</h4>
                               <form id="signupForm" class="form-section">
-                                <div class="form-group" >
+                                <div class="form-group">
                                   <input
                                     type="text"
                                     name="signupname"
@@ -181,6 +181,8 @@
   </body>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.3.0/firebase-firestore-compat.js"></script>
 
   <script type="module">
     // Import the functions you need from the SDKs you need
@@ -191,8 +193,13 @@
       signInWithEmailAndPassword,
     } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      setDoc,
+      doc,
+    } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -206,6 +213,8 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app); // Initialize Firestore
+
     async function initApp() {
       // Add this script after initializing Firebase
       const signupForm = document.getElementById("signupForm");
@@ -214,25 +223,38 @@
         event.preventDefault();
         const email = document.getElementById("signupemail").value;
         const password = document.getElementById("signuppass").value;
+        const name = document.getElementById("signupname").value;
+        const phoneNumber = document.getElementById("signupphone").value;
 
         try {
           const auth = getAuth();
+          console.log(auth);
           const userCredential = await createUserWithEmailAndPassword(
             auth,
             email,
             password
           );
           console.log(userCredential.user.uid);
-          alert("sign up successfull!");
+
+          const docRef = await setDoc(
+            doc(db, "users", userCredential.user.uid),
+            {
+              userId: userCredential.user.uid,
+              name: name,
+              phoneNumber,
+              email,
+            }
+          );
+          console.log("Document written with ID: ", userCredential.user.uid);
+          console.log("sign up successfull!");
         } catch (error) {
-          console.error(error);
+          console.log(error);
           alert("Error sign up. Check the console for details.");
         }
       });
 
       const loginForm = document.getElementById("loginForm");
 
-   
       loginForm.addEventListener("submit", async (event) => {
         event.preventDefault();
 
@@ -251,11 +273,11 @@
             email,
             password
           );
-          console.log(userCredential.user.uid);
+          localStorage.setItem("userId", userCredential.user.uid);
           // alert("login successfull!");
-          window.location.href = "budget.html";
+          window.location.href = `budget.html`;
         } catch (error) {
-          console.error(error);
+          console.log(error);
           alert("Error login.");
         } finally {
           submitButton.disabled = false; // Re-enable the button after login attempt
@@ -269,19 +291,18 @@
 
     const loaderContainer = document.querySelector(".loader-container");
 
-function showLoader() {
-  loaderContainer.classList.add("loading");
-}
+    function showLoader() {
+      loaderContainer.classList.add("loading");
+    }
 
-function hideLoader() {
-  loaderContainer.classList.remove("loading");
-}
+    function hideLoader() {
+      loaderContainer.classList.remove("loading");
+    }
 
-// Simulate loader for 3 seconds
-showLoader();
-setTimeout(() => {
-  hideLoader();
-}, 1500);
-
+    // Simulate loader for 1.5 seconds
+    // showLoader();
+    // setTimeout(() => {
+    //   hideLoader();
+    // }, 1500);
   </script>
 </html>

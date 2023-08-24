@@ -211,31 +211,31 @@ body {
   background-color: #346ba1;
   color: aliceblue;
 }
-#tada #form {
+#tada #transaction-form {
   background-color: #346ba1;
 }
-#tada #form .form-control {
+#tada #transaction-form .form-control {
   color: black;
   font-weight: 600;
 }
-#tada #form .form-control #text {
+#tada #transaction-form .form-control #desc-text {
   padding-top: 3px;
   padding-bottom: 3px;
   border: none;
   width: 100%;
 }
-#tada #form .form-control #amount {
+#tada #transaction-form .form-control #amount {
   padding-top: 3px;
   padding-bottom: 3px;
   border: none;
   width: 100%;
 }
-#tada #form .btn {
+#tada #transaction-form .btn {
   background-color: rgb(121, 182, 139);
   color: aliceblue;
   font-size: 20px;
 }
-#tada #form .btn:hover {
+#tada #transaction-form .btn:hover {
   background-color: cadetblue;
 }
 
