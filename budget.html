@@ -48,12 +48,11 @@
         </div>
       </div>
 
+      <label for="from">From:</label>
+      <input type="text" id="from" placeholder="Select a date" />
 
-    <label for="from">From:</label>
-    <input type="text" id="from" placeholder="Select a date">
-
-    <label for="to">To:</label>
-    <input type="text" id="to" placeholder="Select a date">
+      <label for="to">To:</label>
+      <input type="text" id="to" placeholder="Select a date" />
 
       <br /><br />
       <div class="row" id="row1">
@@ -107,7 +106,7 @@
         <div class="col-lg-6">
           <div class="card" id="tada">
             <div class="card-body">
-              <form id="form">
+              <form id="transaction-form">
                 <div class="form-control">
                   <label for="expense-type">Expense Type</label><br />
                   <select id="expense-type" class="form-cont" required>
@@ -127,7 +126,7 @@
                   <label for="text">Description</label><br />
                   <input
                     type="textarea"
-                    id="text"
+                    id="desc-text"
                     placeholder="Enter Text...."
                   />
                 </div>
@@ -178,23 +177,27 @@
       crossorigin="anonymous"
     ></script>
     <script src="budget.js"></script>
-    
+
     <script type="module">
+      let userData = {};
+
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
+      import { getAuth } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
+
       import {
         getFirestore,
         collection,
         addDoc,
+        updateDoc,
+        doc,
+        getDocs,
+        query,
+        where,
       } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-firestore.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-        signInWithEmailAndPassword,
-      } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-auth.js";
 
       // Initialize Firebase
-      var firebaseConfig = {
+      const firebaseConfig = {
         apiKey: "AIzaSyBJXG2YESVybttVqp_M0slrjP0PTngerXk",
         authDomain: "wealthwave-a1e74.firebaseapp.com",
         projectId: "wealthwave-a1e74",
@@ -208,48 +211,68 @@
       const financesCollection = collection(db, "finance"); // Use the "collection" function
 
       document
-        .getElementById("form")
+        .getElementById("transaction-form")
         .addEventListener("submit", async (event) => {
           event.preventDefault(); // Prevent form submission
 
           // Get form values
-          const expensetype = document.getElementById("expense-type").value;
-          const description = document.getElementById("text").value;
-          const transactiontype =
+          const expenseType = document.getElementById("expense-type").value;
+          const description = document.getElementById("desc-text").value;
+          const transactionType =
             document.getElementById("transaction-type").value;
-          const amount = Number(document.getElementById("amount").value);
-
-          console.log(
-            "Form values:",
-            expensetype,
-            description,
-            transactiontype,
-            amount
-          );
-
-          if (
-            !expensetype ||
-            !description ||
-            !transactiontype ||
-            isNaN(amount)
-          ) {
-            console.log("Form values are incomplete or invalid.");
-            return;
-          }
+          const amount = parseInt(document.getElementById("amount").value);
+          const userId = `/users/${localStorage.getItem("userId")}`;
           // Create an object with the form data
           const transactionData = {
-            expensetype,
+            expenseType,
             description,
-            transactiontype,
+            transactionType,
             amount,
+            userId,
+            time: Date.now(),
           };
 
+          const queryx = query(
+            collection(db, "users"),
+            where("userId", "==", localStorage.getItem("userId"))
+          );
+
+          const res = await getDocs(queryx);
+          const data = res.forEach((doc) => {
+            console.log(JSON.stringify(doc.data()));
+            userData = doc.data();
+          });
+          console.log(userData.userId);
+
           try {
-            // Add data to Firestore collection
-            await addDoc(financesCollection, transactionData);
+            const docRef = doc(db, "users", localStorage.getItem("userId"));
+            const data = {
+              totalBalance: parseInt(
+                document.getElementById("balance").innerText.split("₹")[1]
+              ),
+              income: parseInt(
+                document.getElementById("money-plus").innerText.split("₹")[1]
+              ),
+              expenses: parseInt(
+                document.getElementById("money-minus").innerText.split("₹")[1]
+              ),
+              isDarkTheme:
+                (localStorage.getItem("dark-theme").toString === "true"
+                  ? true
+                  : false) || false,
+            };
+
+            updateDoc(docRef, data)
+              .then(() => {
+                console.log("Document updated successfully");
+              })
+              .catch((error) => {
+                console.error("Error updating document: ", error);
+              });
+
             console.log("Transaction data added to Firestore.");
             // Clear form after submission
-            document.getElementById("form").reset();
+            document.getElementById("transaction-form").reset();
           } catch (error) {
             console.error("Error adding transaction data: ", error);
           }
