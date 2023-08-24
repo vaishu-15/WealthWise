@@ -48,6 +48,9 @@ toggleThemeButton.addEventListener("click", () => {
   barChart.options.scales.x.ticks.color = labelColor;
   barChart.options.scales.y.ticks.color = labelColor;
 
+  expenseChart.update();
+  barChart.update();
+  
 });
 
 // Function to add a new transaction
