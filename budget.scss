@@ -167,16 +167,18 @@ body {
     }
 
     .clear-btn {
-      background-color: cadetblue;
+      background-color: rgb(121, 182, 139);
       color: white;
       font-size: 17px;
       font-weight: 500;
       border: none;
       cursor: pointer;
       border-radius: 2px;
+      padding: 5px 10px; 
+      margin: 10px 2px;
 
       &:hover {
-        background-color: rgb(121, 182, 139);
+        background-color: cadetblue;
       }
     }
 
@@ -234,7 +236,7 @@ body {
         color: #ec8e8e;
         font-weight: 700;
         width: 100%;
-         font-size: 20px;
+        font-size: 20px;
       }
     }
   }
@@ -267,9 +269,12 @@ body {
     }
 
     .btn {
-      background-color: cadetblue;
+      background-color:  rgb(121, 182, 139);
       color: aliceblue;
       font-size: 20px;
+    }
+    .btn:hover{
+      background-color:cadetblue ;
     }
   }
 }
@@ -390,7 +395,7 @@ svg {
 }
 
 svg path {
-  --total-length: 136px; 
+  --total-length: 136px;
   stroke-linecap: round;
   stroke-width: 8;
   stroke: rgb(168, 235, 168);
