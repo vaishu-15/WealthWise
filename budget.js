@@ -5,8 +5,8 @@ const balance = document.getElementById("balance");
 const money_plus = document.getElementById("money-plus");
 const money_minus = document.getElementById("money-minus");
 const list = document.getElementById("list");
-const form = document.getElementById("form");
-const text = document.getElementById("text");
+const form = document.getElementById("transaction-form");
+const text = document.getElementById("desc-text");
 const amount = document.getElementById("amount");
 const expenseType = document.getElementById("expense-type");
 const clearTransactionsButton = document.getElementById("clear-transactions");
@@ -50,7 +50,6 @@ toggleThemeButton.addEventListener("click", () => {
 
   expenseChart.update();
   barChart.update();
-  
 });
 
 // Function to add a new transaction
@@ -87,11 +86,6 @@ function addTransaction(e) {
     updateValues();
     updateLocalStorage();
     updateCharts();
-
-    // Clear input fields
-    expenseType.value = "";
-    text.value = "";
-    amount.value = "";
   }
 }
 
