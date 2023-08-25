@@ -1,20 +1,19 @@
+// const fromDateInput = document.getElementById("from");
+// const toDateInput = document.getElementById("to");
 
-const fromDateInput = document.getElementById("from");
-const toDateInput = document.getElementById("to");
+// flatpickr(fromDateInput, {
+//   dateFormat: "Y-m-d",
+//   onClose: function (selectedDates, dateStr, instance) {
+//     toDateInput._flatpickr.set("minDate", dateStr);
+//   },
+// });
 
-flatpickr(fromDateInput, {
-  dateFormat: "Y-m-d",
-  onClose: function (selectedDates, dateStr, instance) {
-    toDateInput._flatpickr.set("minDate", dateStr);
-  },
-});
-
-flatpickr(toDateInput, {
-  dateFormat: "Y-m-d",
-  onClose: function (selectedDates, dateStr, instance) {
-    fromDateInput._flatpickr.set("maxDate", dateStr);
-  },
-});
+// flatpickr(toDateInput, {
+//   dateFormat: "Y-m-d",
+//   onClose: function (selectedDates, dateStr, instance) {
+//     fromDateInput._flatpickr.set("maxDate", dateStr);
+//   },
+// });
 
 // Get references to HTML elements
 const toggleThemeButton = document.getElementById("theme-toggle");
@@ -53,23 +52,23 @@ toggleThemeButton.addEventListener("click", () => {
   // Calculate label color based on selected theme
   const labelColor = body.classList.contains("dark-theme") ? "white" : "black";
 
-  // Update color-related settings for the expenseChart and barChart
-  expenseChart.options.plugins.legend.labels.color = labelColor;
-  expenseChart.options.plugins.tooltip.callbacks.label = function (context) {
-    return context.label + ": " + context.formattedValue;
-  };
+  // // Update color-related settings for the expenseChart and barChart
+  // expenseChart.options.plugins.legend.labels.color = labelColor;
+  // expenseChart.options.plugins.tooltip.callbacks.label = function (context) {
+  //   return context.label + ": " + context.formattedValue;
+  // };
 
-  barChart.options.plugins.legend.labels.color = labelColor;
-  barChart.options.plugins.tooltip.callbacks.label = function (context) {
-    return context.label + ": " + context.formattedValue;
-  };
+  // barChart.options.plugins.legend.labels.color = labelColor;
+  // barChart.options.plugins.tooltip.callbacks.label = function (context) {
+  //   return context.label + ": " + context.formattedValue;
+  // };
 
   // Update chart color and tick color settings
-  barChart.options.scales.x.ticks.color = labelColor;
-  barChart.options.scales.y.ticks.color = labelColor;
+  // barChart.options.scales.x.ticks.color = labelColor;
+  // barChart.options.scales.y.ticks.color = labelColor;
 
-  expenseChart.update();
-  barChart.update();
+  // expenseChart.update();
+  // barChart.update();
 });
 
 // Function to add a new transaction
@@ -99,12 +98,12 @@ function addTransaction(e) {
     // Add transaction to the array
     transactions.push(transaction);
 
-    // Update the DOM with the new transaction
-    addTransactionDOM(transaction);
+    // // Update the DOM with the new transaction
+    // addTransactionDOM(transaction);
 
-    // Update summary values and local storage
-    updateValues();
-    updateLocalStorage();
+    // // Update summary values and local storage
+    // updateValues();
+    // updateLocalStorage();
     updateCharts();
   }
 }
@@ -115,26 +114,23 @@ function generateID() {
 
 // Function to add a transaction to the DOM
 function addTransactionDOM(transaction) {
-  const sign = transaction.amount < 0 ? "-" : "+";
-  const item = document.createElement("li");
-
-  item.classList.add(transaction.amount < 0 ? "minus" : "plus");
-
-  // Populate the list item with transaction details
-  item.innerHTML = `
-  <div class="lists">
-<div>
-  <span class="uppercase"><strong>${transaction.expense} :</strong></span> 
-  &nbsp ${transaction.text} &nbsp 
-  </div>
-  <div>
-  <span class="text_color">${sign}${Math.abs(transaction.amount)}</span>
-  </div>
-  </div>
-`;
-
-  // Append the item to the transaction list
-  list.appendChild(item);
+  // const sign = transaction.amount < 0 ? "-" : "+";
+  //   const item = document.createElement("li");
+  //   item.classList.add(transaction.amount < 0 ? "minus" : "plus");
+  //   // Populate the list item with transaction details
+  //   item.innerHTML = `
+  //   <div class="lists">
+  // <div>
+  //   <span class="uppercase"><strong>${transaction.expense} :</strong></span>
+  //   &nbsp ${transaction.text} &nbsp
+  //   </div>
+  //   <div>
+  //   <span class="text_color">${sign}${Math.abs(transaction.amount)}</span>
+  //   </div>
+  //   </div>
+  // `;
+  //   // Append the item to the transaction list
+  //   list.appendChild(item);
 }
 
 clearTransactionsButton.addEventListener("click", clearAllTransactions);
@@ -194,11 +190,11 @@ function updateLocalStorage() {
 function Init() {
   list.innerHTML = "";
   transactions.forEach(addTransactionDOM);
-  updateValues();
+  // updateValues();
   dark = JSON.parse(localStorage.getItem("dark-theme"));
 }
 
-Init();
+// Init();
 
 form.addEventListener("submit", addTransaction);
 
@@ -220,46 +216,46 @@ function updateDoughnutChartData() {
     }, {});
 }
 
-const expenseChartCanvas = document.getElementById("expense-chart");
-let expenseChart;
+// const expenseChartCanvas = document.getElementById("expense-chart");
+// let expenseChart;
 function updateDoughnutChart() {
   updateDoughnutChartData();
-  expenseChart = new Chart(expenseChartCanvas, {
-    type: "doughnut",
-    data: {
-      labels: Object.keys(aggregatedExpenseData), // Use the expense types as labels
-      datasets: [
-        {
-          data: Object.values(aggregatedExpenseData), // Use the aggregated amounts as data
-          backgroundColor: [
-            "#e07e63",
-            "#bfca43",
-            "#df9f8e",
-            "#7eb1e4",
-            "#bec476",
-          ],
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          labels: {
-            color: body.classList.contains("dark-theme") ? "white" : "black",
-          },
-        },
-        tooltip: {
-          callbacks: {
-            label: function (context) {
-              return context.label + ": " + context.formattedValue;
-            },
-          },
-        },
-      },
-    },
-  });
+  // expenseChart = new Chart(expenseChartCanvas, {
+  //   type: "doughnut",
+  //   data: {
+  //     labels: Object.keys(aggregatedExpenseData), // Use the expense types as labels
+  //     datasets: [
+  //       {
+  //         data: Object.values(aggregatedExpenseData), // Use the aggregated amounts as data
+  //         backgroundColor: [
+  //           "#e07e63",
+  //           "#bfca43",
+  //           "#df9f8e",
+  //           "#7eb1e4",
+  //           "#bec476",
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   options: {
+  //     responsive: true,
+  //     maintainAspectRatio: false,
+  //     plugins: {
+  //       legend: {
+  //         labels: {
+  //           color: body.classList.contains("dark-theme") ? "white" : "black",
+  //         },
+  //       },
+  //       tooltip: {
+  //         callbacks: {
+  //           label: function (context) {
+  //             return context.label + ": " + context.formattedValue;
+  //           },
+  //         },
+  //       },
+  //     },
+  //   },
+  // });
 }
 updateDoughnutChart();
 // Calculate income by expense type
@@ -276,47 +272,47 @@ function updateBarChartData() {
 
 // Bar Chart
 
-const barChartCanvas = document.getElementById("barChart");
-let barChart;
+// const barChartCanvas = document.getElementById("barChart");
+// let barChart;
 function loadBarChart() {
   updateBarChartData();
-  barChart = new Chart(barChartCanvas, {
-    type: "bar",
-    data: {
-      labels: Object.keys(incomeByExpenseType),
-      datasets: [
-        {
-          label: "Income by Expense Type",
-          data: Object.values(incomeByExpenseType),
-          backgroundColor: [
-            "#e07e63",
-            "#bfca43",
-            "#df9f8e",
-            "#7eb1e4",
-            "#bec476",
-          ],
-        },
-      ],
-    },
-    options: {
-      border: 0,
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
+  // barChart = new Chart(barChartCanvas, {
+  //   type: "bar",
+  //   data: {
+  //     labels: Object.keys(incomeByExpenseType),
+  //     datasets: [
+  //       {
+  //         label: "Income by Expense Type",
+  //         data: Object.values(incomeByExpenseType),
+  //         backgroundColor: [
+  //           "#e07e63",
+  //           "#bfca43",
+  //           "#df9f8e",
+  //           "#7eb1e4",
+  //           "#bec476",
+  //         ],
+  //       },
+  //     ],
+  //   },
+  //   options: {
+  //     border: 0,
+  //     responsive: true,
+  //     maintainAspectRatio: false,
+  //     scales: {
+  //       y: {
+  //         beginAtZero: true,
+  //       },
+  //     },
+  //   },
+  // });
 }
 loadBarChart();
 
 function updateCharts() {
-  barChart.destroy();
-  loadBarChart();
-  expenseChart.destroy();
-  updateDoughnutChart();
+  // barChart.destroy();
+  // loadBarChart();
+  // expenseChart.destroy();
+  // updateDoughnutChart();
 }
 
 const loaderContainer = document.querySelector(".loader-container");

@@ -47,17 +47,18 @@
         </div>
       </div>
       <div class="logout_container ms-auto mb-3 text-end">
-      <a href="get_started.html" class="logout">LOGOUT</a>
+        <p id="username">Guest</p>
+        <a href="get_started.html" class="logout">LOGOUT</a>
       </div>
-      <div class="log_con">
+      <!-- <div class="log_con">
         <div class="date_p">
-      <label for="from">From:</label>
-      <input type="text" id="from" placeholder="Select a date" />
+          <label for="from">From:</label>
+          <input type="text" id="from" placeholder="Select a date" />&emsp;
 
-      <label for="to">To:</label>
-      <input type="text" id="to" placeholder="Select a date" />
-      </div>
-      </div>
+          <label for="to">To:</label>
+          <input type="text" id="to" placeholder="Select a date" />
+        </div>
+      </div> -->
       <br /><br />
       <div class="row" id="row1">
         <div class="col-md-4">
@@ -112,17 +113,15 @@
             <div class="card-body">
               <form id="transaction-form">
                 <div class="form-control">
-                  <label for="expense-type">Expense Type</label><br />
-                  <select id="expense-type" class="form-cont" required>
-                    <option value="Salary">Salary</option>
-                    <option value="Profits">Profits</option>
-                    <option value="Extra Earnings">Extra Earnings</option>
-                    <option value="Trading">Trading</option>
-                    <option value="Food">Food & Drinks</option>
-                    <option value="Clothing">Clothing</option>
-                    <option value="Personal Care">Personal Care</option>
-                    <option value="Medicines">Medicines</option>
-                    <option value="Miscellaneous">Miscellaneous</option>
+                  <label for="transaction-type">Transaction Type</label>
+                  <select
+                    id="transaction-type"
+                    class="form-cont"
+                    required
+                    onchange="updateSubcategories()"
+                  >
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
                   </select>
                 </div>
                 <br />
@@ -135,11 +134,19 @@
                   />
                 </div>
                 <br />
+
                 <div class="form-control">
-                  <label for="transaction-type">Transaction Type</label>
-                  <select id="transaction-type" class="form-cont" required>
-                    <option value="income">Income</option>
-                    <option value="expense">Expense</option>
+                  <label for="expense-type">Expense Type</label><br />
+                  <select id="expense-type" class="form-cont" required>
+                    <!-- <option value="Salary">Salary</option>
+                    <option value="Profits">Profits</option>
+                    <option value="Extra Earnings">Extra Earnings</option>
+                    <option value="Trading">Trading</option>
+                    <option value="Food">Food & Drinks</option>
+                    <option value="Clothing">Clothing</option>
+                    <option value="Personal Care">Personal Care</option>
+                    <option value="Medicines">Medicines</option>
+                    <option value="Miscellaneous">Miscellaneous</option> -->
                   </select>
                 </div>
                 <br />
@@ -182,8 +189,43 @@
     ></script>
     <script src="budget.js"></script>
 
+    <script>
+      function updateSubcategories() {
+        var transactionType = document.getElementById("transaction-type");
+        var expenseType = document.getElementById("expense-type");
+
+        // Clear previous subcategory options
+        expenseType.innerHTML = "";
+
+        let selectedCategory = transactionType.value;
+
+        if (selectedCategory === "income") {
+          addOption(expenseType, "Salary", "Salary");
+          addOption(expenseType, "Profits", "Profits");
+          addOption(expenseType, "Extra Earnings", "Extra Earnings");
+          addOption(expenseType, "Trading", "Trading");
+        } else if (selectedCategory === "expense") {
+          addOption(expenseType, "Food", "Food & Drinks");
+          addOption(expenseType, "Clothing", "Clothing");
+          addOption(expenseType, "Personal Care", "Personal Care");
+          addOption(expenseType, "Medicines", "Medicines");
+          addOption(expenseType, "Miscellaneous", "Miscellaneous");
+        }
+      }
+
+      function addOption(selectElement, value, text) {
+        let option = document.createElement("option");
+        option.value = value;
+        option.text = text;
+        selectElement.appendChild(option);
+      }
+    </script>
+
     <script type="module">
+      updateSubcategories();
       let userData = {};
+      const expenseChartCanvas = document.getElementById("expense-chart");
+      const barChartCanvas = document.getElementById("barChart");
 
       // Import the functions you need from the SDKs you need
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.2.0/firebase-app.js";
@@ -214,6 +256,201 @@
       const db = getFirestore(app); // Initialize Firestore
       const financesCollection = collection(db, "finance"); // Use the "collection" function
 
+      const userDetailsQuery = query(
+        collection(db, "users"),
+        where("userId", "==", localStorage.getItem("userId"))
+      );
+
+      const userDetailsRes = await getDocs(userDetailsQuery);
+      const data = userDetailsRes.forEach((doc) => {
+        const username = doc.data()?.name;
+        document.getElementById("username").innerText = username;
+      });
+
+      const userId = `/users/${localStorage.getItem("userId")}`;
+
+      const userFinanceQuery = query(
+        collection(db, "finance"),
+        where("userId", "==", userId)
+      );
+
+      const userFinanceRes = await getDocs(userFinanceQuery);
+
+      const userFinanceData = userFinanceRes.forEach((doc) => {
+        const sign = doc.data()?.transactionType === "expense" ? "-" : "+";
+        const item = document.createElement("li");
+        item.classList.add(
+          doc.data()?.transactionType === "expense" ? "minus" : "plus"
+        );
+        // Populate the list item with transaction details
+        item.innerHTML = `
+                    <div class="lists">
+                  <div>
+                    <span class="uppercase"><strong>${
+                      doc.data()?.expenseType
+                    } :</strong></span>
+                    &nbsp ${doc.data()?.description} &nbsp
+                    </div>
+                    <div>
+                    <span class="text_color">${sign}${Math.abs(
+          doc.data()?.amount
+        )}</span>
+                    </div>
+                    </div>
+                  `;
+        // Append the item to the transaction list
+        list?.appendChild(item);
+      });
+
+      let totalAmount = 0;
+      let totalIncome = 0;
+      let totalExpenses = 0;
+
+      let aggregatedDataExpense = {};
+      let aggregatedDataIncome = {};
+
+      userFinanceRes.forEach((transaction) => {
+        if (
+          typeof transaction?.data()?.amount === "number" &&
+          !isNaN(transaction?.data()?.amount) &&
+          transaction?.data()?.transactionType === "expense"
+        ) {
+          if (aggregatedDataExpense[transaction?.data().expenseType]) {
+            aggregatedDataExpense[transaction?.data().expenseType] +=
+              transaction?.data().amount;
+          } else {
+            aggregatedDataExpense[transaction?.data().expenseType] =
+              transaction?.data().amount;
+          }
+        }
+
+        if (
+          typeof transaction?.data()?.amount === "number" &&
+          !isNaN(transaction?.data()?.amount) &&
+          transaction?.data()?.transactionType === "income"
+        ) {
+          if (aggregatedDataIncome[transaction?.data().expenseType]) {
+            aggregatedDataIncome[transaction?.data().expenseType] +=
+              transaction?.data().amount;
+          } else {
+            aggregatedDataIncome[transaction?.data().expenseType] =
+              transaction?.data().amount;
+          }
+        }
+
+        if (
+          typeof transaction?.data()?.amount === "number" &&
+          !isNaN(transaction?.data()?.amount)
+        ) {
+          totalAmount += transaction?.data()?.amount;
+        }
+        if (
+          typeof transaction?.data()?.amount === "number" &&
+          !isNaN(transaction?.data()?.amount) &&
+          transaction?.data()?.transactionType === "income"
+        ) {
+          totalIncome += transaction?.data()?.amount;
+        }
+        if (
+          typeof transaction?.data()?.amount === "number" &&
+          !isNaN(transaction?.data()?.amount) &&
+          transaction?.data()?.transactionType === "expense"
+        ) {
+          totalExpenses += transaction?.data()?.amount;
+        }
+      });
+
+      document.getElementById("balance").innerText = totalAmount;
+      document.getElementById("money-plus").innerText = totalIncome;
+      document.getElementById("money-minus").innerText = totalExpenses;
+
+      function getRandomColor() {
+        var letters = "0123456789ABCDEF";
+        var color = "#";
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      function generateRandomColorArray(length) {
+        var colorArray = [];
+        for (var i = 0; i < length; i++) {
+          colorArray.push(getRandomColor());
+        }
+        return colorArray;
+      }
+
+      var length = 10; // Specify the desired length of the array
+      var randomColorArray = generateRandomColorArray(length);
+
+      console.log(
+        aggregatedDataIncome,
+        "aggregatedDataIncomeaggregatedDataIncome"
+      );
+
+      const expenseChart = new Chart(expenseChartCanvas, {
+        type: "doughnut",
+        data: {
+          labels: Object.keys(aggregatedDataExpense), // Use the expense types as labels
+          datasets: [
+            {
+              data: Object.values(aggregatedDataExpense), // Use the aggregated amounts as data
+              backgroundColor: generateRandomColorArray(
+                Object.values(aggregatedDataExpense)?.length
+              ),
+            },
+          ],
+        },
+
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              labels: {
+                color: body.classList.contains("dark-theme")
+                  ? "white"
+                  : "black",
+              },
+            },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.label + ": " + context.formattedValue;
+                },
+              },
+            },
+          },
+        },
+      });
+
+      const barChart = new Chart(barChartCanvas, {
+        type: "bar",
+        data: {
+          labels: Object.keys(aggregatedDataIncome),
+          datasets: [
+            {
+              label: "Income by Expense Type",
+              data: Object.values(aggregatedDataIncome),
+              backgroundColor: generateRandomColorArray(
+                Object.values(aggregatedDataExpense)?.length
+              ),
+            },
+          ],
+        },
+        options: {
+          border: 0,
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
       document
         .getElementById("transaction-form")
         .addEventListener("submit", async (event) => {
@@ -243,40 +480,15 @@
 
           const res = await getDocs(queryx);
           const data = res.forEach((doc) => {
-            console.log(JSON.stringify(doc.data()));
             userData = doc.data();
           });
-          console.log(userData.userId);
 
           try {
-            const docRef = doc(db, "users", localStorage.getItem("userId"));
-            const data = {
-              totalBalance: parseInt(
-                document.getElementById("balance").innerText.split("₹")[1]
-              ),
-              income: parseInt(
-                document.getElementById("money-plus").innerText.split("₹")[1]
-              ),
-              expenses: parseInt(
-                document.getElementById("money-minus").innerText.split("₹")[1]
-              ),
-              isDarkTheme:
-                (localStorage.getItem("dark-theme").toString === "true"
-                  ? true
-                  : false) || false,
-            };
-
-            updateDoc(docRef, data)
-              .then(() => {
-                console.log("Document updated successfully");
-              })
-              .catch((error) => {
-                console.error("Error updating document: ", error);
-              });
-
+            await addDoc(financesCollection, transactionData);
             console.log("Transaction data added to Firestore.");
             // Clear form after submission
             document.getElementById("transaction-form").reset();
+            location.reload();
           } catch (error) {
             console.error("Error adding transaction data: ", error);
           }
