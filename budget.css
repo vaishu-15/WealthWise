@@ -589,4 +589,23 @@ body {
   100% {
     transform: translate(0%, -50%);
   }
+}
+.logout {
+  background-color: rgb(91, 91, 238); /* Change to your desired background color */
+  color: #ffffff; /* Change to your desired text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  position: absolute;
+  top: 60px;
+  right: 114px;
+}
+
+.logout:hover {
+  background-color: white; /* Change to your desired hover background color */
+  cursor: pointer;
+  color: rgb(91, 91, 238);
 }/*# sourceMappingURL=budget.css.map */
