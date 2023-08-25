@@ -590,10 +590,13 @@ body {
     transform: translate(0%, -50%);
   }
 }
-.logout-container {
+.log-con {
   margin-top: 10px;
-  display: flex;
   align-items: center;
+}
+
+.date_p {
+  text-align: center;
 }
 
 .logout {
@@ -604,9 +607,6 @@ body {
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  margin-top: 0px;
-  margin-bottom: 14px;
-  margin-left: 200px;
 }
 
 .logout:hover {

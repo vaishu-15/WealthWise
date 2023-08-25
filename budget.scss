@@ -491,11 +491,6 @@ body {
   padding: 50px;
 }
 
-// .switch {
-//     display: inline-block;
-//     position: relative;
-// }
-
 .switch__input {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: inset(50%);
@@ -672,12 +667,15 @@ body {
     }
 }
 
-.logout-container {
+.log-con{
   margin-top: 10px; 
-  display: flex;
+  // display: flex;
   align-items: center;
+  
 }
-
+.date_p{
+  text-align: center;
+}
 .logout{
   background-color: rgb(91, 91, 238); 
   color: #ffffff; 
@@ -686,9 +684,7 @@ body {
   text-decoration: none;
   font-weight: bold;
   transition: background-color 0.3s ease;
-  margin-top: 0px;
-  margin-bottom: 14px;
-  margin-left: 200px; 
+//  position: absolute;
 }
 
 .logout:hover {
