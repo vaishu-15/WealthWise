@@ -48,13 +48,7 @@
       </div>
       <div class="logout_container ms-auto mb-3 text-end">
         <p id="username">Guest</p>
-        <a
-          href="get_started.html"
-          class="logout"
-          id="logoutButton"
-          onclick="confirmLogout()"
-          >LOGOUT</a
-        >
+        <a class="logout" id="logoutButton" onclick="confirmLogout()">LOGOUT</a>
       </div>
       <!-- <div class="log_con">
         <div class="date_p">
@@ -160,7 +154,7 @@
                   <input
                     type="number"
                     id="amount"
-                    placeholder="Enter amount..."
+                    placeholder="₹ Enter amount..."
                   />
                 </div>
                 <br />
@@ -199,7 +193,6 @@
         var transactionType = document.getElementById("transaction-type");
         var expenseType = document.getElementById("expense-type");
 
-        
         // Clear previous subcategory options
         expenseType.innerHTML = "";
 
@@ -368,9 +361,10 @@
         }
       });
 
-      document.getElementById("balance").innerText = totalAmount;
-      document.getElementById("money-plus").innerText = totalIncome;
-      document.getElementById("money-minus").innerText = totalExpenses;
+      document.getElementById("balance").innerText = "₹" + " " + totalAmount;
+      document.getElementById("money-plus").innerText = "₹" + " " + totalIncome;
+      document.getElementById("money-minus").innerText =
+        "₹" + " " + totalExpenses;
 
       function getRandomColor() {
         var letters = "0123456789ABCDEF";
@@ -459,8 +453,6 @@
         },
       });
 
-      
-
       document
         .getElementById("transaction-form")
         .addEventListener("submit", async (event) => {
@@ -503,7 +495,6 @@
             console.error("Error adding transaction data: ", error);
           }
         });
-  
     </script>
   </body>
 </html>
