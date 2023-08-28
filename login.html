@@ -101,7 +101,8 @@
 
                             <p class="mb-0 mt-4 text-center">
                               <a href="#0" class="link-one"
-                                >Forgot your password?</a>
+                                >Forgot your password?</a
+                              >
                             </p>
                           </form>
                         </div>
@@ -160,7 +161,7 @@
                                   <i class="input-icon fa fa-phone"></i>
                                 </div>
                                 <button type="submit" class="btn mt-4">
-                                Submit
+                                  Submit
                                 </button>
                               </form>
                             </div>
@@ -244,9 +245,13 @@
             }
           );
           console.log("Document written with ID: ", userCredential.user.uid);
+          localStorage.setItem("userId", userCredential.user.uid);
+
           console.log("sign up successfull!");
-           alert("You've signed up successfully, let's get started by logging in.");
-           window.location.href = `budget.html`;
+          alert(
+            "You've signed up successfully! Click OK to continue."
+          );
+          window.location.href = `budget.html`;
         } catch (error) {
           console.log(error);
           alert("Error sign up. Check the console for details.");
@@ -274,7 +279,7 @@
             password
           );
           localStorage.setItem("userId", userCredential.user.uid);
-          
+
           // alert("login successfull!");
           window.location.href = `budget.html`;
         } catch (error) {

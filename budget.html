@@ -261,6 +261,7 @@
       );
 
       const userDetailsRes = await getDocs(userDetailsQuery);
+
       const data = userDetailsRes.forEach((doc) => {
         const username = doc.data()?.name;
         const greeting = "Hello, " + (username || "Guest");
