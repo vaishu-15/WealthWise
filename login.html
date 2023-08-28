@@ -151,11 +151,12 @@
                                 </div>
                                 <div class="form-group mt-2">
                                   <input
-                                    type="phone"
+                                    type="tel"
                                     name="signupphone"
                                     class="form-style"
                                     placeholder="Phone No.*"
                                     id="signupphone"
+                                    pattern="[0-9]{10}"
                                     autocomplete="off"
                                   />
                                   <i class="input-icon fa fa-phone"></i>
@@ -225,6 +226,26 @@
         const name = document.getElementById("signupname").value;
         const phoneNumber = document.getElementById("signupphone").value;
 
+        if (!name.trim()) {
+          alert("Please enter your name.");
+          return;
+        }
+
+        if (!email.trim()) {
+          alert("Please enter your email.");
+          return;
+        }
+
+        if (!password.trim()) {
+          alert("Please enter your password.");
+          return;
+        }
+
+        if (!phoneNumber.match(/^\d{10}$/)) {
+          alert("Phone number must have 10 digits.");
+          return;
+        }
+
         try {
           const auth = getAuth();
           console.log(auth);
@@ -248,9 +269,7 @@
           localStorage.setItem("userId", userCredential.user.uid);
 
           console.log("sign up successfull!");
-          alert(
-            "You've signed up successfully! Click OK to continue."
-          );
+          alert("You've signed up successfully! Click OK to continue.");
           window.location.href = `budget.html`;
         } catch (error) {
           console.log(error);
@@ -271,6 +290,17 @@
 
         const email = document.getElementById("logemail").value;
         const password = document.getElementById("logpass").value;
+
+        if (!email.trim()) {
+          alert("Please enter your email.");
+          return;
+        }
+
+        if (!password.trim()) {
+          alert("Please enter your password.");
+          return;
+        }
+
         try {
           const auth = getAuth();
           const userCredential = await signInWithEmailAndPassword(
