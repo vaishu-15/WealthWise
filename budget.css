@@ -650,6 +650,7 @@ body {
 #username {
   color: var(--primary-text);
   font-family: "arial";
+  text-shadow: 2px 2px 2px rgba(109, 105, 105, 0.479);
   font-size: 2em;
   margin: 0px 20 2 8px;
   font-weight: bold;
