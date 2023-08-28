@@ -348,7 +348,7 @@ h6 span{
 
 /* animated */
 .background {
-  background: linear-gradient(132deg, #e79140, #4877b9, #545881);
+  background: linear-gradient(132deg, #01275c, #4877b9, #535997);
   animation: Gradient 15s ease infinite;
   position: relative;
   height: 100vh;
