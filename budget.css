@@ -667,4 +667,38 @@ body {
     width: 0;
     transition: all 2s ease-in;
   }
+}
+.links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer {
+  width: 100%;
+  margin: 0;
+}
+
+.footer h6 {
+  color: #f8f1f1;
+  font-size: 1em;
+}
+
+.footer_text {
+  z-index: 2;
+  bottom: 0;
+  color: #b7d2ee;
+  background-color: #064a69;
+  width: 100vw;
+  padding: 10px;
+}
+.footer_text p {
+  font-size: 0.75em;
+  margin-bottom: 0;
+}
+.footer_text ul {
+  font-size: 1em;
+}
+.footer_text ul a {
+  text-decoration: none;
+  color: #7397cc;
 }/*# sourceMappingURL=budget.css.map */
