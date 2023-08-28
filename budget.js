@@ -339,5 +339,5 @@ function confirmLogout() {
   }
   // If confirmed, redirect to the logout page
   // window.location.replace("get_started.html");
-  window.location.replace("get_started.html");
+  window.location.replace("index.html");
 }
