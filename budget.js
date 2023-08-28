@@ -317,7 +317,6 @@ function updateCharts() {
 
 const loaderContainer = document.querySelector(".loader-container");
 
-
 function showLoader() {
   loaderContainer.classList.add("loading");
 }
@@ -335,19 +334,10 @@ setTimeout(() => {
 function confirmLogout() {
   const confirmation = confirm("Are you sure you want to log out?");
 
-  if (confirmation) {
-    window.location.href = "get_started.html";
-  } else {
-   window.location.href = "login.html";
+  if (!confirmation) {
+    return; // If not confirmed, do nothing and remain on the same page
   }
+  // If confirmed, redirect to the logout page
+  // window.location.replace("get_started.html");
+  window.location.replace("get_started.html");
 }
-
-
-
-
-
-
-
-
-
-
