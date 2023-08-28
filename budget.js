@@ -337,8 +337,14 @@ function confirmLogout() {
 
   if (confirmation) {
     window.location.href = "get_started.html";
+  } else {
+   window.location.href = "login.html";
   }
 }
+
+
+
+
 
 
 
