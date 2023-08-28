@@ -654,42 +654,51 @@ body {
   }
 }
 
-// footer
-.links {
-  display: flex;
-  gap: 20px;
-}
-// .footer{
-//   font-size: 0.8em;
-// }
 .footer {
-  // margin-top: 8em;
-  width: 100%;
-  margin: 0;
+  background-color: #064a69;
+  padding: 30px 0;
+  h6{
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      color: white;
+  }
+  p{
+    text-align: center;
+  }
 }
-.footer h6{
-  color: #241564;
-  font-size: 1em;
-}
+
 .footer_text {
-  z-index: 2;
-  bottom: 0;
-  color: #c0cddb;
-  background-color: #367b9b;
-  width: 100vw;
-  padding: 10px;
-  p {
-    font-size: 0.9em;
-    margin-bottom: 0;
-  }
-  ul {
-    font-size: 1em;
-    a {
-      text-decoration: none;
-      color: #7397cc;
-    }
+  color: rgb(194, 191, 191);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.col-md-6 {
+  flex: 0 0 calc(50% - 15px);
+  max-width: calc(50% - 15px);
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
   }
 }
+
 /* Style for the links section */
 .links {
   display: flex;
@@ -723,7 +732,6 @@ body {
 .col-md-7 {
   text-align: right;
   margin-top: 10px;
-  
 }
 
 /* Make logo text bold */
