@@ -317,6 +317,7 @@ function updateCharts() {
 
 const loaderContainer = document.querySelector(".loader-container");
 
+
 function showLoader() {
   loaderContainer.classList.add("loading");
 }
@@ -330,3 +331,17 @@ showLoader();
 setTimeout(() => {
   hideLoader();
 }, 1500);
+
+function confirmLogout() {
+  const confirmation = confirm("Are you sure you want to log out?");
+
+  if (confirmation) {
+    window.location.href = "get_started.html";
+  }
+}
+
+
+
+
+
+

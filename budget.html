@@ -48,7 +48,13 @@
       </div>
       <div class="logout_container ms-auto mb-3 text-end">
         <p id="username">Guest</p>
-        <a href="get_started.html" class="logout">LOGOUT</a>
+        <a
+          href="get_started.html"
+          class="logout"
+          id="logoutButton"
+          onclick="confirmLogout()"
+          >LOGOUT</a
+        >
       </div>
       <!-- <div class="log_con">
         <div class="date_p">
@@ -134,7 +140,6 @@
                   />
                 </div>
                 <br />
-
                 <div class="form-control">
                   <label for="expense-type">Expense Type</label><br />
                   <select id="expense-type" class="form-cont" required>
@@ -264,7 +269,9 @@
       const userDetailsRes = await getDocs(userDetailsQuery);
       const data = userDetailsRes.forEach((doc) => {
         const username = doc.data()?.name;
-        document.getElementById("username").innerText = username;
+        const greeting = "Hello, " + (username || "Guest");
+        document.getElementById("username").innerText = greeting;
+        // document.getElementById("username").innerText = username;
       });
 
       const userId = `/users/${localStorage.getItem("userId")}`;
@@ -284,20 +291,20 @@
         );
         // Populate the list item with transaction details
         item.innerHTML = `
-                    <div class="lists">
-                  <div>
-                    <span class="uppercase"><strong>${
-                      doc.data()?.expenseType
-                    } :</strong></span>
-                    &nbsp ${doc.data()?.description} &nbsp
-                    </div>
-                    <div>
-                    <span class="text_color">${sign}${Math.abs(
+                          <div class="lists">
+                        <div>
+                          <span class="uppercase"><strong>${
+                            doc.data()?.expenseType
+                          } :</strong></span>
+                          &nbsp ${doc.data()?.description} &nbsp
+                          </div>
+                          <div>
+                          <span class="text_color">${sign}${Math.abs(
           doc.data()?.amount
         )}</span>
-                    </div>
-                    </div>
-                  `;
+                          </div>
+                          </div>
+                        `;
         // Append the item to the transaction list
         list?.appendChild(item);
       });
@@ -451,6 +458,8 @@
         },
       });
 
+      
+
       document
         .getElementById("transaction-form")
         .addEventListener("submit", async (event) => {
@@ -493,6 +502,7 @@
             console.error("Error adding transaction data: ", error);
           }
         });
+  
     </script>
   </body>
 </html>
