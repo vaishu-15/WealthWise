@@ -193,22 +193,6 @@ function updateCharts() {
   
 }
 
-const loaderContainer = document.querySelector(".loader-container");
-
-function showLoader() {
-  loaderContainer.classList.add("loading");
-}
-
-function hideLoader() {
-  loaderContainer.classList.remove("loading");
-}
-
-// Simulate loader for 3 seconds
-showLoader();
-setTimeout(() => {
-  hideLoader();
-}, 1500);
-
 function confirmLogout() {
   const confirmation = confirm("Are you sure you want to log out?");
 
