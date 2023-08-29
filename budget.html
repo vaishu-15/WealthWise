@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row g-3 mt-5">
         <div class="col lg-6">
           <div class="programming-stats">
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="row g-3 mt-5">
         <div class="col-lg-6">
           <div class="card" id="tada">
@@ -121,14 +121,14 @@
                   <input
                     type="textarea"
                     id="desc-text"
-                    placeholder="Enter Text...." required
+                    placeholder="Enter Text...."
+                    required
                   />
                 </div>
                 <br />
                 <div class="form-control">
                   <label for="expense-type">Expense Type</label><br />
-                  <select id="expense-type" class="form-cont" required>
-                  </select>
+                  <select id="expense-type" class="form-cont" required></select>
                 </div>
                 <br />
                 <div class="form-control">
@@ -136,7 +136,8 @@
                   <input
                     type="number"
                     id="amount"
-                    placeholder="₹ Enter amount..." required
+                    placeholder="₹ Enter amount..."
+                    required
                   />
                 </div>
                 <br />
@@ -161,30 +162,37 @@
         </div>
       </div>
       <br />
+    </div>
+    <!-- footer -->
+    <div class="footer">
+      <div class="footer_text">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <h6>About This Project</h6>
+
+              <p>
+                WEALTHWISE, is a collaborative effort by two passionate
+                individuals. Here, we are committed to providing you with the
+                knowledge, tools, and resources you need to take charge of your
+                financial well-being.
+              </p>
+              <p class="text-white">
+                Here's to smart financial choices and a brighter tomorrow.<br />
+                "Vanshika and Vaishali"
+              </p>
+            </div>
+            <hr />
+
+            <div class="col">
+              <p>
+                Copyright © 2023 Vanshika and Vaishali. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-         <!-- footer -->
-      <div class="footer">
-        <div class="footer_text">        
-          <div class="container">  
-            <div class="row">   
-              <div class="col-md-12">    
-                <h6>About This Project</h6>
-                
-                <p>
-                   WEALTHWISE, is a collaborative effort by two passionate individuals.  Here, we are committed to providing you with the knowledge, tools, and resources you need to take charge of your financial well-being.</p>
-            <p class=" text-white"> Here's to smart financial choices and a brighter tomorrow.<br>
-            "Vanshika and Vaishali"
-                </p>
-                
-              </div><hr>
-              
-          <div class=" col ">
-        <p> Copyright © 2023 Vanshika and Vaishali. All rights reserved. </p>
-      </div>
-        </div>   
-      </div>
-      </div>
-      </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
@@ -389,29 +397,33 @@
         return colorArray;
       }
 
-
       function updateBalanceColor() {
-  const totalIncome = parseFloat(document.getElementById("money-plus").innerText.replace("₹", ""));
-  const totalExpenses = parseFloat(document.getElementById("money-minus").innerText.replace("₹", ""));
-  const balanceContainer = document.getElementById("balance");
+        const totalIncome = parseFloat(
+          document.getElementById("money-plus").innerText.replace("₹", "")
+        );
+        const totalExpenses = parseFloat(
+          document.getElementById("money-minus").innerText.replace("₹", "")
+        );
+        const balanceContainer = document.getElementById("balance");
 
-  if (totalExpenses > totalIncome) {
-    document.getElementById("card-1").style.backgroundColor = "#d0342c";
-  } else {
-    balanceContainer.style.backgroundColor = ""; // Reset the background color
-  }
-}
+        if (totalExpenses > totalIncome) {
+          document.getElementById("card-1").style.backgroundColor = "#d0342c";
+        } else {
+          balanceContainer.style.backgroundColor = ""; // Reset the background color
+        }
+      }
 
-// Call the function when the page is loaded
-window.addEventListener("load", updateBalanceColor);
+      // Call the function when the page is loaded
+      window.addEventListener("load", updateBalanceColor);
 
-// Update the total income and total expenses
-document.getElementById("money-plus").innerText = "₹" + " " + totalIncome.toFixed(2);
-document.getElementById("money-minus").innerText = "₹" + " " + totalExpenses.toFixed(2);
+      // Update the total income and total expenses
+      document.getElementById("money-plus").innerText =
+        "₹" + " " + totalIncome.toFixed(2);
+      document.getElementById("money-minus").innerText =
+        "₹" + " " + totalExpenses.toFixed(2);
 
-// Call the function to update balance color
-updateBalanceColor();
-
+      // Call the function to update balance color
+      updateBalanceColor();
 
       var length = 10; // Specify the desired length of the array
       var randomColorArray = generateRandomColorArray(length);
@@ -439,7 +451,7 @@ updateBalanceColor();
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { 
+            legend: {
               labels: {
                 color: body.classList.contains("dark-theme")
                   ? "white"
@@ -525,6 +537,22 @@ updateBalanceColor();
             console.error("Error adding transaction data: ", error);
           }
         });
+
+      const loaderContainer = document.querySelector(".loader-container");
+
+      function showLoader() {
+        loaderContainer.classList.add("loading");
+      }
+
+      function hideLoader() {
+        loaderContainer.classList.remove("loading");
+      }
+
+      // Simulate loader for 3 seconds
+      showLoader();
+      setTimeout(() => {
+        hideLoader();
+      }, 1500);
     </script>
   </body>
 </html>
