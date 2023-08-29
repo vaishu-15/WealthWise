@@ -202,6 +202,23 @@
     <script src="budget.js"></script>
 
     <script>
+
+      const loaderContainer = document.querySelector(".loader-container");
+
+      function showLoader() {
+        loaderContainer.classList.add("loading");
+      }
+
+      function hideLoader() {
+        loaderContainer.classList.remove("loading");
+      }
+
+      // Simulate loader for 3 seconds
+      showLoader();
+      setTimeout(() => {
+        hideLoader();
+      }, 1500);
+      
       function updateSubcategories() {
         var transactionType = document.getElementById("transaction-type");
         var expenseType = document.getElementById("expense-type");
@@ -538,21 +555,7 @@
           }
         });
 
-      const loaderContainer = document.querySelector(".loader-container");
-
-      function showLoader() {
-        loaderContainer.classList.add("loading");
-      }
-
-      function hideLoader() {
-        loaderContainer.classList.remove("loading");
-      }
-
-      // Simulate loader for 3 seconds
-      showLoader();
-      setTimeout(() => {
-        hideLoader();
-      }, 1500);
+      
     </script>
   </body>
 </html>
