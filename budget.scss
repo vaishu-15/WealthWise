@@ -20,7 +20,6 @@ $bg-color: #ea4961;
   background-color: var(--btn-color-bg);
   color: var(--primary-text);
   border-color: var(--primary-text);
-  // background-color: #fcfafd;
   border-radius: 50%;
   border-color: #3fa0ef;
   border-width: 2.3px;
@@ -42,7 +41,6 @@ $bg-color: #ea4961;
 .dark-theme {
   --primary-bg: #{$dark-primary-bg};
   --primary-text: #{$dark-primary-text};
-  // --chart-bg: #{$dark-chart-bg};
   --chart-font-color: #{$dark-chart-font-color};
   --btn-color-bg: #{$dark-btn-color-bg};
   --card-color: #{$dark-card-color};
@@ -431,7 +429,7 @@ svg path {
 }
 // .....
 body {
-  padding: 50px;
+  padding: 0px;
 }
 
 .switch__input {
@@ -657,13 +655,13 @@ body {
 .footer {
   background-color: #064a69;
   padding: 30px 0;
-  h6{
-      font-weight: bold;
-      font-size: 18px;
-      text-align: center;
-      color: white;
+  h6 {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+    color: white;
   }
-  p{
+  p {
     text-align: center;
   }
 }
