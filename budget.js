@@ -114,7 +114,7 @@ function updateValues() {
 
   // Update card background color when it total goes into negative
   if (total < 0) {
-    document.getElementById("card-1").style.backgroundColor = "#d0342c ";
+    document.getElementById("card-1").style.backgroundColor = "#d0342c";
   } else {
     document.getElementById("card-1").style.backgroundColor = "#3FA0EF";
   }

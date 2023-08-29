@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <br />
+      
       <div class="row g-3 mt-5">
         <div class="col lg-6">
           <div class="programming-stats">
@@ -97,7 +97,7 @@
           </div>
         </div>
       </div>
-      <br />
+      
       <div class="row g-3 mt-5">
         <div class="col-lg-6">
           <div class="card" id="tada">
@@ -388,6 +388,30 @@
         }
         return colorArray;
       }
+
+
+      function updateBalanceColor() {
+  const totalIncome = parseFloat(document.getElementById("money-plus").innerText.replace("₹", ""));
+  const totalExpenses = parseFloat(document.getElementById("money-minus").innerText.replace("₹", ""));
+  const balanceContainer = document.getElementById("balance");
+
+  if (totalExpenses > totalIncome) {
+    document.getElementById("card-1").style.backgroundColor = "#d0342c";
+  } else {
+    balanceContainer.style.backgroundColor = ""; // Reset the background color
+  }
+}
+
+// Call the function when the page is loaded
+window.addEventListener("load", updateBalanceColor);
+
+// Update the total income and total expenses
+document.getElementById("money-plus").innerText = "₹" + " " + totalIncome.toFixed(2);
+document.getElementById("money-minus").innerText = "₹" + " " + totalExpenses.toFixed(2);
+
+// Call the function to update balance color
+updateBalanceColor();
+
 
       var length = 10; // Specify the desired length of the array
       var randomColorArray = generateRandomColorArray(length);
