@@ -265,7 +265,7 @@ select {
 }
 
 .chart-container {
-  width: 200px;
+  width: 250px;
   height: 250px;
   background-color: var(--chart-bg);
   color: var(--primary-text);
