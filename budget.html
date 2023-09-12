@@ -116,6 +116,12 @@
                   </select>
                 </div>
                 <br />
+
+                <div class="form-control">
+                  <label for="expense-type">Expense Type</label><br />
+                  <select id="expense-type" class="form-cont" required></select>
+                </div>
+                <br />
                 <div class="form-control">
                   <label for="text">Description</label><br />
                   <input
@@ -124,11 +130,6 @@
                     placeholder="Enter Text...."
                     required
                   />
-                </div>
-                <br />
-                <div class="form-control">
-                  <label for="expense-type">Expense Type</label><br />
-                  <select id="expense-type" class="form-cont" required></select>
                 </div>
                 <br />
                 <div class="form-control">
@@ -371,12 +372,6 @@
 
         if (
           typeof transaction?.data()?.amount === "number" &&
-          !isNaN(transaction?.data()?.amount)
-        ) {
-          totalAmount += transaction?.data()?.amount;
-        }
-        if (
-          typeof transaction?.data()?.amount === "number" &&
           !isNaN(transaction?.data()?.amount) &&
           transaction?.data()?.transactionType === "income"
         ) {
@@ -391,7 +386,10 @@
         }
       });
 
-      document.getElementById("balance").innerText = "₹" + " " + totalAmount;
+      const totalBalance = totalIncome - totalExpenses;
+
+      document.getElementById("balance").innerText =
+        "₹" + " " + totalBalance.toFixed(2);
       document.getElementById("money-plus").innerText = "₹" + " " + totalIncome;
       document.getElementById("money-minus").innerText =
         "₹" + " " + totalExpenses;
