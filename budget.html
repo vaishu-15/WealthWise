@@ -536,6 +536,65 @@
             where("userId", "==", localStorage.getItem("userId"))
           );
 
+          let dark = false;
+
+          const toggleThemeButton = document.getElementById("theme-toggle");
+
+
+          // Update theme preference in Firestore when the theme is toggled
+          toggleThemeButton.addEventListener("click", async () => {
+            dark = !dark; // Toggle the theme
+
+            // Update theme preference in Firestore (assuming you have a user document with a "theme" field)
+            const userId = localStorage.getItem("userId"); // Get the user's ID from local storage
+            if (userId) {
+              try {
+                const userDocRef = doc(db, "users", userId);
+                await updateDoc(userDocRef, {
+                  theme: dark ? "dark" : "light", // Store the theme preference in Firestore
+                });
+              } catch (error) {
+                console.error(
+                  "Error updating theme preference in Firestore: ",
+                  error
+                );
+              }
+            }
+
+            // Apply the selected theme to the body
+            body.classList.toggle("dark-theme", dark);
+            body.classList.toggle("light-theme", !dark);
+
+            // Update the local storage with the theme preference
+            localStorage.setItem("dark-theme", dark);
+          });
+
+          // Retrieve theme preference from Firestore on page load
+          window.addEventListener("load", async () => {
+            const userId = localStorage.getItem("userId"); // Get the user's ID from local storage
+            if (userId) {
+              try {
+                const userDocRef = doc(db, "users", userId);
+                const userDocSnapshot = await getDoc(userDocRef);
+                const userThemePreference = userDocSnapshot.data()?.theme;
+
+                // Apply the theme preference if found
+                if (userThemePreference === "dark") {
+                  dark = true;
+                  body.classList.add("dark-theme");
+                } else {
+                  dark = false;
+                  body.classList.remove("dark-theme");
+                }
+              } catch (error) {
+                console.error(
+                  "Error retrieving theme preference from Firestore: ",
+                  error
+                );
+              }
+            }
+          });
+
           const res = await getDocs(queryx);
           const data = res.forEach((doc) => {
             userData = doc.data();

@@ -14,29 +14,30 @@ const clearTransactionsButton = document.getElementById("clear-transactions");
 
 let dark = false;
 
-// Load transactions from local storage if available
-const localStorageTransactions = JSON.parse(
-  localStorage.getItem("transactions")
-);
-let transactions =
-  localStorage.getItem("transactions") !== null ? localStorageTransactions : [];
+dark = JSON.parse(localStorage.getItem("dark-theme")) || false;
 
-// Theme Toggle Functionality
-toggleThemeButton.addEventListener("click", () => {
-  dark = JSON.parse(localStorage.getItem("dark-theme"));
-
-  console.log(dark, "dark");
-
+// Function to toggle the theme
+function toggleTheme() {
   // Toggle dark and light theme classes on the body
-  body.classList.toggle("dark-theme");
-  body.classList.toggle("light-theme");
-  dark = dark ? false : true;
-  localStorage.setItem("dark-theme", dark);
+  body.classList.toggle("dark-theme", dark);
+  body.classList.toggle("light-theme", !dark);
 
   // Calculate label color based on selected theme
-  const labelColor = body.classList.contains("dark-theme") ? "white" : "black";
+  const labelColor = dark ? "white" : "black";
 
+  // Update local storage with the theme preference
+  localStorage.setItem("dark-theme", JSON.stringify(dark));
+}
+
+toggleTheme();
+
+// Theme Toggle Functionality
+toggleThemeButton.addEventListener("click", () => {dark = !dark;
+    toggleTheme();
 });
+
+// Initialize the page when it loads
+Init();
 
 // Function to add a new transaction
 function addTransaction(e) {
@@ -161,7 +162,6 @@ function updateDoughnutChartData() {
     }, {});
 }
 
-// const expenseChartCanvas = document.getElementById("expense-chart");
 // let expenseChart;
 function updateDoughnutChart() {
   updateDoughnutChartData();
