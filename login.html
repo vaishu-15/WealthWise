@@ -286,7 +286,7 @@
           return; // Prevent multiple login attempts while the button is disabled
         }
 
-        submitButton.disabled = true; // Disable the button during login process
+        submitButton.disabled = false; // Disable the button during login process
 
         const email = document.getElementById("logemail").value;
         const password = document.getElementById("logpass").value;
