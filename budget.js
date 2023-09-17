@@ -227,3 +227,4 @@ function validateForm(event) {
   // If all inputs are valid, you can proceed with adding the transaction
   addTransaction();
 }
+
